@@ -12,8 +12,11 @@ import com.rbkmoney.vortigon.handler.constant.HandleEventType
 import com.rbkmoney.vortigon.repository.ContractDao
 import com.rbkmoney.vortigon.repository.ContractorDao
 import com.rbkmoney.vortigon.repository.ShopDao
+import mu.KotlinLogging
 import org.springframework.core.convert.ConversionService
 import org.springframework.stereotype.Component
+
+private val log = KotlinLogging.logger {}
 
 @Component
 class ShopCreatedHandler(
@@ -24,6 +27,7 @@ class ShopCreatedHandler(
 ) : ChangeHandler<PartyChange, MachineEvent> {
 
     override fun handleChange(change: PartyChange, event: MachineEvent) {
+        log.debug { "Handle shop create change: $change" }
         val effects = change.getClaimStatus()?.accepted?.effects
         effects?.filter {
             it.isSetShopEffect && it.shopEffect.effect.isSetCreated
@@ -67,6 +71,7 @@ class ShopCreatedHandler(
                     payoutScheduleId = shopCreated.payoutSchedule.id
                 }
             }
+            log.debug { "Save shop: $shop" }
             shopDao.save(shop)
         }
     }

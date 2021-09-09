@@ -22,6 +22,7 @@ class PartySuspensionHandler(
 ) : ChangeHandler<PartyChange, MachineEvent> {
 
     override fun handleChange(change: PartyChange, event: MachineEvent) {
+        log.debug { "Handle party suspension change: $change" }
         val partySuspension = change.partySuspension
         val party = partyDao.findByPartyId(event.sourceId) ?: Party()
         val updateParty = party.apply {

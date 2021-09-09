@@ -28,17 +28,19 @@ class ContractCreateHandler(
 ) : ChangeHandler<PartyChange, MachineEvent> {
 
     override fun handleChange(change: PartyChange, event: MachineEvent) {
-        val claimStatus = change.getClaimStatus()?.accepted?.effects?.filter {
+        log.debug { "Handle contract create change: $change" }
+        change.getClaimStatus()?.accepted?.effects?.filter {
             it.isSetContractEffect && it.contractEffect.effect.isSetCreated
         }?.forEach { claimEffect ->
+            log.debug { "Contract create change. Handle effect: $claimEffect" }
             val contractCreated = claimEffect.contractEffect.effect.created
             val contract = Contract().apply {
                 partyId = event.sourceId
                 eventId = event.eventId
                 eventTime = TypeUtil.stringToLocalDateTime(event.createdAt)
                 createdAt = TypeUtil.stringToLocalDateTime(contractCreated.createdAt)
-                validSince = TypeUtil.stringToLocalDateTime(contractCreated.validSince)
-                validUntil = TypeUtil.stringToLocalDateTime(contractCreated.validUntil)
+                validSince = contractCreated.validSince?.let { TypeUtil.stringToLocalDateTime(it) }
+                validUntil = contractCreated.validUntil?.let { TypeUtil.stringToLocalDateTime(it) }
                 status = TBaseUtil.unionFieldToEnum(contractCreated.getStatus(), ContractStatus::class.java)
                 if (contractCreated.status.isSetTerminated) {
                     statusTerminatedAt = TypeUtil.stringToLocalDateTime(contractCreated.status.terminated.terminatedAt)
@@ -57,10 +59,12 @@ class ContractCreateHandler(
             if (contractor != null) {
                 val contractor = convertThriftContractor(event, contractor)
                 contractor.contractorId = contractorId
+                log.debug { "Save contractor: $contractor" }
                 contractorDao.save(contractor)
             }
             contract.contractorId = contractorId
             contract.contractId = claimEffect.contractEffect.contractId
+            log.debug { "Save contract: $contract" }
             contractDao.save(contract)
         }
     }

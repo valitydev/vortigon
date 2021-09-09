@@ -22,8 +22,8 @@ class PartyBlockingHandler(
 ) : ChangeHandler<PartyChange, MachineEvent> {
 
     override fun handleChange(change: PartyChange, event: MachineEvent) {
+        log.debug { "Handle party blocking change: $change" }
         val partyBlocking = change.partyBlocking
-
         val party = partyDao.findByPartyId(event.sourceId) ?: Party()
         val updateParty = party.apply {
             partyId = event.sourceId

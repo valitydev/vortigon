@@ -9,8 +9,11 @@ import com.rbkmoney.vortigon.extension.getClaimStatus
 import com.rbkmoney.vortigon.handler.ChangeHandler
 import com.rbkmoney.vortigon.handler.constant.HandleEventType
 import com.rbkmoney.vortigon.repository.ContractorDao
+import mu.KotlinLogging
 import org.springframework.core.convert.ConversionService
 import org.springframework.stereotype.Component
+
+private val log = KotlinLogging.logger {}
 
 @Component
 class ContractorCreateHandler(
@@ -19,10 +22,12 @@ class ContractorCreateHandler(
 ) : ChangeHandler<PartyChange, MachineEvent> {
 
     override fun handleChange(change: PartyChange, event: MachineEvent) {
+        log.debug { "Handle contractor create change: $change" }
         val claimEffects = change.getClaimStatus()?.accepted?.effects?.filter {
             it.isSetContractorEffect && it.contractorEffect.effect.isSetCreated
         }
         claimEffects?.forEach { claimEffect ->
+            log.debug { "Contractor create change. Handle effect: $claimEffect" }
             val contractorEffect = claimEffect.contractorEffect
             val partyContractor = contractorEffect.effect.created
             val contractor = partyContractor.contractor
@@ -33,6 +38,7 @@ class ContractorCreateHandler(
                 contractorId = contractorEffect.id
                 contractorIdentificationLevel = ContractorIdentificationLvl.valueOf(partyContractor.status.name)
             }
+            log.debug { "Save contractor: $contractor" }
             contractorDao.save(contractorDomain)
         }
     }

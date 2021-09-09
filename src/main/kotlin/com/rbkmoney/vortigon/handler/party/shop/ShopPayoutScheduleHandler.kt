@@ -9,7 +9,10 @@ import com.rbkmoney.vortigon.handler.ChangeHandler
 import com.rbkmoney.vortigon.handler.constant.HandleEventType
 import com.rbkmoney.vortigon.handler.merge.BeanNullPropertyMerger
 import com.rbkmoney.vortigon.repository.ShopDao
+import mu.KotlinLogging
 import org.springframework.stereotype.Component
+
+private val log = KotlinLogging.logger {}
 
 @Component
 class ShopPayoutScheduleHandler(
@@ -39,6 +42,7 @@ class ShopPayoutScheduleHandler(
                 }
             }
             beanMerger.mergeEvent(updateShop, shop)
+            log.debug { "Save shop: $shop" }
             shopDao.save(shop)
         }
     }

@@ -9,7 +9,10 @@ import com.rbkmoney.vortigon.handler.ChangeHandler
 import com.rbkmoney.vortigon.handler.constant.HandleEventType
 import com.rbkmoney.vortigon.handler.merge.BeanNullPropertyMerger
 import com.rbkmoney.vortigon.repository.ShopDao
+import mu.KotlinLogging
 import org.springframework.stereotype.Component
+
+private val log = KotlinLogging.logger {}
 
 @Component
 class ShopPayoutToolHandler(
@@ -18,6 +21,7 @@ class ShopPayoutToolHandler(
 ) : ChangeHandler<PartyChange, MachineEvent> {
 
     override fun handleChange(change: PartyChange, event: MachineEvent) {
+        log.debug { "handle shop payout tool change: $change" }
         val claimEffects = change.getClaimStatus()?.accepted?.effects
         claimEffects?.filter {
             it.isSetShopEffect && it.shopEffect.effect.isSetPayoutToolChanged
@@ -37,6 +41,7 @@ class ShopPayoutToolHandler(
                 payoutToolId = payoutToolChanged
             }
             beanMerger.mergeEvent(updateShop, shop)
+            log.debug { "Save shop: $shop" }
             shopDao.save(shop)
         }
     }

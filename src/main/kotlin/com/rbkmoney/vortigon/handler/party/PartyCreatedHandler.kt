@@ -20,6 +20,7 @@ class PartyCreatedHandler(
 ) : ChangeHandler<PartyChange, MachineEvent> {
 
     override fun handleChange(change: PartyChange, event: MachineEvent) {
+        log.debug { "Handle party created change: $change" }
         val partyCreated = change.partyCreated
         val partyCreatedAt = TypeUtil.stringToLocalDateTime(partyCreated.createdAt)
         val party = Party().apply {

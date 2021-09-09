@@ -20,6 +20,7 @@ class PartyRevisionHandler(
 ) : ChangeHandler<PartyChange, MachineEvent> {
 
     override fun handleChange(change: PartyChange, event: MachineEvent) {
+        log.debug { "Handle party revision change: $change" }
         val partyRevisionChanged = change.revisionChanged
         val party = partyDao.findByPartyId(event.sourceId) ?: Party()
         val updateParty = party.apply {

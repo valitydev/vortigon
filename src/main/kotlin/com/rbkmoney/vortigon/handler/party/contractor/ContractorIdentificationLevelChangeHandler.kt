@@ -10,7 +10,10 @@ import com.rbkmoney.vortigon.handler.ChangeHandler
 import com.rbkmoney.vortigon.handler.constant.HandleEventType
 import com.rbkmoney.vortigon.handler.merge.BeanNullPropertyMerger
 import com.rbkmoney.vortigon.repository.ContractorDao
+import mu.KotlinLogging
 import org.springframework.stereotype.Component
+
+private val log = KotlinLogging.logger {}
 
 @Component
 class ContractorIdentificationLevelChangeHandler(
@@ -19,6 +22,7 @@ class ContractorIdentificationLevelChangeHandler(
 ) : ChangeHandler<PartyChange, MachineEvent> {
 
     override fun handleChange(change: PartyChange, event: MachineEvent) {
+        log.debug { "Handle contractor identification level change: $change" }
         val claimEffects = change.getClaimStatus()?.accepted?.effects?.filter {
             it.isSetContractorEffect && it.contractorEffect.effect.isSetIdentificationLevelChanged
         }
@@ -35,6 +39,7 @@ class ContractorIdentificationLevelChangeHandler(
                 contractorIdentificationLevel = ContractorIdentificationLvl.valueOf(identificationLevelChanged.name)
             }
             beanMerger.mergeEvent(updateContractor, contractor)
+            log.debug { "Save contractor: $contractor" }
             contractorDao.save(contractor)
         }
     }

@@ -10,7 +10,10 @@ import com.rbkmoney.vortigon.handler.ChangeHandler
 import com.rbkmoney.vortigon.handler.constant.HandleEventType
 import com.rbkmoney.vortigon.handler.merge.BeanNullPropertyMerger
 import com.rbkmoney.vortigon.repository.ShopDao
+import mu.KotlinLogging
 import org.springframework.stereotype.Component
+
+private val log = KotlinLogging.logger {}
 
 @Component
 class ShopBlockingHandler(
@@ -19,6 +22,7 @@ class ShopBlockingHandler(
 ) : ChangeHandler<PartyChange, MachineEvent> {
 
     override fun handleChange(change: PartyChange, event: MachineEvent) {
+        log.debug { "Shop account change: $change" }
         val shopId = change.shopBlocking.shopId
         val partyId = event.sourceId
         val updateShop = Shop().apply {
@@ -39,6 +43,7 @@ class ShopBlockingHandler(
         val shop = shopDao.findByPartyIdAndShopId(partyId, shopId)
             ?: throw IllegalStateException("Shop not found. partyId=$partyId;shopId=$shopId")
         beanMerger.mergeEvent(updateShop, shop)
+        log.debug { "Save shop: $shop" }
         shopDao.save(shop)
     }
 

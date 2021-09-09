@@ -28,6 +28,7 @@ class ContractContractorIdChangeHandler(
 ) : ChangeHandler<PartyChange, MachineEvent> {
 
     override fun handleChange(change: PartyChange, event: MachineEvent) {
+        log.debug { "Handle contract contractor id change: $change" }
         val claimEffects = change.getClaimStatus()?.accepted?.effects?.filter {
             it.isSetContractEffect && it.contractEffect.effect.isSetContractorChanged
         }
@@ -67,6 +68,7 @@ class ContractContractorIdChangeHandler(
                 shop.eventTime = TypeUtil.stringToLocalDateTime(event.createdAt)
                 shop
             }
+            log.debug { "Save shops: $shopList" }
             shopDao.saveAll(shopList)
         }
     }

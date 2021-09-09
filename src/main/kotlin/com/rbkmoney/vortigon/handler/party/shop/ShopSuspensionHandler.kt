@@ -9,7 +9,10 @@ import com.rbkmoney.vortigon.handler.ChangeHandler
 import com.rbkmoney.vortigon.handler.constant.HandleEventType
 import com.rbkmoney.vortigon.handler.merge.BeanNullPropertyMerger
 import com.rbkmoney.vortigon.repository.ShopDao
+import mu.KotlinLogging
 import org.springframework.stereotype.Component
+
+private val log = KotlinLogging.logger {}
 
 @Component
 class ShopSuspensionHandler(
@@ -18,6 +21,7 @@ class ShopSuspensionHandler(
 ) : ChangeHandler<PartyChange, MachineEvent> {
 
     override fun handleChange(change: PartyChange, event: MachineEvent) {
+        log.debug { "Handle shop suspension change: $change" }
         val shopSuspension = change.shopSuspension
         val shopId = shopSuspension.shopId
         val partyId = event.sourceId
@@ -38,6 +42,7 @@ class ShopSuspensionHandler(
             }
         }
         beanMerger.mergeEvent(updateShop, shop)
+        log.debug { "Save shop: $shop" }
         shopDao.save(shop)
     }
 

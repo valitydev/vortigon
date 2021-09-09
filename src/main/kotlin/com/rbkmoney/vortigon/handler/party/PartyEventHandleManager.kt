@@ -31,7 +31,7 @@ class PartyEventHandleManager(
             ack.acknowledge()
         } catch (e: Exception) {
             log.error(e) { "Exception during PartyListener process" }
-            ack.nack(kafkaProperties.consumer.throttlingTimeoutMs.toLong())
+            Thread.sleep(kafkaProperties.consumer.throttlingTimeoutMs.toLong())
             throw e
         }
     }
