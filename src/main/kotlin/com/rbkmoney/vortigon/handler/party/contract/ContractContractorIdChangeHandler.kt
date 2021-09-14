@@ -35,18 +35,19 @@ class ContractContractorIdChangeHandler(
         claimEffects?.forEach { claimEffect ->
             val contractEffect = claimEffect.contractEffect
             val contract = contractDao.findByPartyIdAndContractId(
-                contractEffect.contractId,
-                contractEffect.effect.contractorChanged
+                event.sourceId,
+                contractEffect.contractId
             ) ?: Contract()
-            updateShops(event, contract.contractorId, contract.contractId, contractEffect.effect.contractorChanged)
             val updateContract = Contract().apply {
                 partyId = event.sourceId
+                contractId = contractEffect.contractId
                 contractorId = contractEffect.effect.contractorChanged
                 eventId = event.eventId
                 eventTime = TypeUtil.stringToLocalDateTime(event.createdAt)
             }
             beanMerger.mergeEvent(updateContract, contract)
             contractDao.save(contract)
+            updateShops(event, contract.contractorId, contract.contractId, contractEffect.effect.contractorChanged)
         }
     }
 
@@ -63,7 +64,7 @@ class ContractContractorIdChangeHandler(
             val currentContractorState = contractorDao.findByPartyIdAndContractorId(event.sourceId, contractorId)
             val newShop = conversionService.convert(currentContractorState, Shop::class.java)!!
             val shopList = currentShopStates.map { shop ->
-                beanMerger.mergeEvent(shop, newShop)
+                beanMerger.mergeEvent(newShop, shop)
                 shop.eventId = event.eventId
                 shop.eventTime = TypeUtil.stringToLocalDateTime(event.createdAt)
                 shop

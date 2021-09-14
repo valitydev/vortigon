@@ -10,11 +10,13 @@ import com.rbkmoney.vortigon.handler.ChangeHandler
 import com.rbkmoney.vortigon.handler.constant.HandleEventType
 import com.rbkmoney.vortigon.repository.ContractorDao
 import mu.KotlinLogging
+import org.springframework.core.annotation.Order
 import org.springframework.core.convert.ConversionService
 import org.springframework.stereotype.Component
 
 private val log = KotlinLogging.logger {}
 
+@Order(2)
 @Component
 class ContractorCreateHandler(
     private val contractorDao: ContractorDao,

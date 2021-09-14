@@ -13,11 +13,13 @@ import com.rbkmoney.vortigon.repository.ContractDao
 import com.rbkmoney.vortigon.repository.ContractorDao
 import com.rbkmoney.vortigon.repository.ShopDao
 import mu.KotlinLogging
+import org.springframework.core.annotation.Order
 import org.springframework.core.convert.ConversionService
 import org.springframework.stereotype.Component
 
 private val log = KotlinLogging.logger {}
 
+@Order(4)
 @Component
 class ShopCreatedHandler(
     private val shopDao: ShopDao,

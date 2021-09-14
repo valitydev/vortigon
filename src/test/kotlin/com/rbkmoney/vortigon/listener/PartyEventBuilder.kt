@@ -284,6 +284,20 @@ object PartyEventBuilder {
         return partyChange
     }
 
+    fun buildContractContractorIdChange(contract: Contract, contractorId: String): PartyChange {
+        val contractEffectUnit = ContractEffectUnit()
+        contractEffectUnit.contractId = contract.getId()
+        val contractEffect = ContractEffect()
+        contractEffect.contractorChanged = contractorId
+        contractEffectUnit.setEffect(contractEffect)
+        val claimEffect = ClaimEffect()
+        claimEffect.contractEffect = contractEffectUnit
+        val claim: Claim = buildClaimCreated(claimEffect)
+        val partyChange = PartyChange()
+        partyChange.claimCreated = claim
+        return partyChange
+    }
+
     fun buildShopSuspensionPartyChange(
         shopId: String,
         since: LocalDateTime,

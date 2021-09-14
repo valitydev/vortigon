@@ -285,6 +285,117 @@ class PartyManagementListenerTest : AbstractKafkaIntegrationTest() {
     }
 
     @Test
+    fun `test contract contractorId change event handle`() {
+        // Given
+        val partyId = UUID.randomUUID().toString()
+        val contractId = UUID.randomUUID().toString()
+        val contractorId = UUID.randomUUID().toString()
+        val sequenceId = AtomicLong()
+        val partyCreatedPartyChange = PartyEventBuilder.buildPartyCreatedPartyChange(partyId)
+        val newContract = PartyEventBuilder.buildContract(contractId)
+        val contractCreatedPartyChange = PartyEventBuilder.buildContractCreatedPartyChange(newContract)
+        val contractContractorIdChange = PartyEventBuilder.buildContractContractorIdChange(newContract, contractorId)
+        val events = mutableListOf<SinkEvent>().apply {
+            add(
+                PartyEventBuilder.buildSinkEvent(
+                    PartyEventBuilder.buildMachineEvent(partyId, sequenceId.incrementAndGet(), partyCreatedPartyChange)
+                )
+            )
+            add(
+                PartyEventBuilder.buildSinkEvent(
+                    PartyEventBuilder.buildMachineEvent(partyId, sequenceId.incrementAndGet(), contractCreatedPartyChange)
+                )
+            )
+            add(
+                PartyEventBuilder.buildSinkEvent(
+                    PartyEventBuilder.buildMachineEvent(partyId, sequenceId.incrementAndGet(), contractContractorIdChange)
+                )
+            )
+        }
+
+        // When
+        events.forEach {
+            val record = ProducerRecord<String, SinkEvent>(partyTopic, it.event.sourceId, it)
+            producer.send(record)
+        }
+        val contract = await().atMost(60, TimeUnit.SECONDS).pollDelay(Durations.ONE_SECOND).until(
+            {
+                contractDao.findByPartyIdAndContractId(partyId, contractId)
+            },
+            { it != null && it.eventId == sequenceId.get() }
+        )
+
+        // Then
+        assertNotNull(contract)
+        assertEquals(contractorId, contract?.contractorId)
+    }
+
+    @Test
+    fun `test contract contractorId change with shops event handle`() {
+        // Given
+        val partyId = UUID.randomUUID().toString()
+        val contractId = UUID.randomUUID().toString()
+        val shopId = UUID.randomUUID().toString()
+        val sequenceId = AtomicLong()
+        val partyCreatedPartyChange = PartyEventBuilder.buildPartyCreatedPartyChange(partyId)
+        val newContract = PartyEventBuilder.buildContract(contractId) // TODO пофиксить разный contractorId
+        val contractCreatedPartyChange = PartyEventBuilder.buildContractCreatedPartyChange(newContract)
+        val partyContractor = PartyEventBuilder.buildPartyContractor().apply {
+            id = contractId
+        }
+        val partyContractorChange = PartyEventBuilder.buildContractorCreatedPartyChange(partyContractor)
+        val contractContractorIdChange = PartyEventBuilder.buildContractContractorIdChange(newContract, partyContractor.id)
+        val shopCreated = PartyEventBuilder.buildShopCreatedPartyChange(shopId)
+        shopCreated.claimCreated.status.accepted.effects
+            .first { it.isSetShopEffect }.shopEffect.effect.created.contractId = contractId
+        val events = mutableListOf<SinkEvent>().apply {
+            add(
+                PartyEventBuilder.buildSinkEvent(
+                    PartyEventBuilder.buildMachineEvent(partyId, sequenceId.incrementAndGet(), partyCreatedPartyChange)
+                )
+            )
+            add(
+                PartyEventBuilder.buildSinkEvent(
+                    PartyEventBuilder.buildMachineEvent(partyId, sequenceId.incrementAndGet(), partyContractorChange)
+                )
+            )
+            add(
+                PartyEventBuilder.buildSinkEvent(
+                    PartyEventBuilder.buildMachineEvent(partyId, sequenceId.incrementAndGet(), contractCreatedPartyChange)
+                )
+            )
+            add(
+                PartyEventBuilder.buildSinkEvent(
+                    PartyEventBuilder.buildMachineEvent(partyId, sequenceId.incrementAndGet(), shopCreated)
+                )
+            )
+            add(
+                PartyEventBuilder.buildSinkEvent(
+                    PartyEventBuilder.buildMachineEvent(partyId, sequenceId.incrementAndGet(), contractContractorIdChange)
+                )
+            )
+        }
+
+        // When
+        events.forEach {
+            val record = ProducerRecord<String, SinkEvent>(partyTopic, it.event.sourceId, it)
+            producer.send(record)
+        }
+        val contract = await().atMost(60, TimeUnit.SECONDS).pollDelay(Durations.ONE_SECOND).until(
+            {
+                contractDao.findByPartyIdAndContractId(partyId, contractId)
+            },
+            { it != null && it.eventId == sequenceId.get() && it.contractorId == partyContractor.id }
+        )
+        val shop = shopDao.findByPartyIdAndShopId(partyId, shopId)
+
+        // Then
+        assertNotNull(contract)
+        assertEquals(partyContractor.id, contract?.contractorId)
+        assertTrue(shop?.eventId == sequenceId.get())
+    }
+
+    @Test
     fun `test shop create event handle`() {
         // Given
         val partyId = UUID.randomUUID().toString()

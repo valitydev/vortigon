@@ -10,10 +10,12 @@ import com.rbkmoney.vortigon.handler.ChangeHandler
 import com.rbkmoney.vortigon.handler.constant.HandleEventType
 import com.rbkmoney.vortigon.repository.PartyDao
 import mu.KotlinLogging
+import org.springframework.core.annotation.Order
 import org.springframework.stereotype.Component
 
 private val log = KotlinLogging.logger {}
 
+@Order(1)
 @Component
 class PartyCreatedHandler(
     private val partyDao: PartyDao,
