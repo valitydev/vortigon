@@ -1,11 +1,12 @@
 package com.rbkmoney.vortigon.listener
 
-import com.rbkmoney.machinegun.eventsink.SinkEvent
+import com.rbkmoney.machinegun.eventsink.MachineEvent
 import com.rbkmoney.vortigon.handler.party.PartyEventHandleManager
 import mu.KotlinLogging
-import org.apache.kafka.clients.consumer.ConsumerRecord
 import org.springframework.kafka.annotation.KafkaListener
 import org.springframework.kafka.support.Acknowledgment
+import org.springframework.kafka.support.KafkaHeaders
+import org.springframework.messaging.handler.annotation.Header
 import org.springframework.stereotype.Component
 
 private val log = KotlinLogging.logger {}
@@ -21,12 +22,13 @@ class PartyManagementListener(
         containerFactory = "partyListenerContainerFactory"
     )
     fun handle(
-        messages: List<ConsumerRecord<String, SinkEvent>>,
+        batch: List<MachineEvent>,
+        @Header(KafkaHeaders.RECEIVED_PARTITION_ID) partition: Int,
+        @Header(KafkaHeaders.OFFSET) offsets: Int,
         ack: Acknowledgment,
     ) {
-        log.info { "PartyListener listen machineEvent batch with size: $messages.size" }
-        val events = messages.map { it.value().event }
-        partyEventHandleManager.handleMessages(events, ack)
-        log.info { "PartyListener batch has been committed, batch.size=${messages.size}" }
+        log.info { "PartyListener listen offsets=$offsets partition=$partition batch.size=${batch.size}" }
+        partyEventHandleManager.handleMessages(batch, ack)
+        log.info { "PartyListener batch has been committed, batch.size=${batch.size}" }
     }
 }

@@ -1,10 +1,10 @@
 package com.rbkmoney.vortigon.config
 
 import com.rbkmoney.kafka.common.exception.handler.SeekToCurrentWithSleepBatchErrorHandler
-import com.rbkmoney.machinegun.eventsink.SinkEvent
+import com.rbkmoney.machinegun.eventsink.MachineEvent
 import com.rbkmoney.mg.event.sink.service.ConsumerGroupIdService
 import com.rbkmoney.vortigon.config.properties.KafkaProperties
-import com.rbkmoney.vortigon.serializer.SinkEventDeserializer
+import com.rbkmoney.vortigon.serializer.MachineEventDeserializer
 import lombok.RequiredArgsConstructor
 import mu.KotlinLogging
 import org.apache.kafka.clients.consumer.ConsumerConfig
@@ -27,13 +27,13 @@ class KafkaConfig(
     private val consumerGroupIdService: ConsumerGroupIdService,
 ) {
     @Bean
-    fun partyListenerContainerFactory(): ConcurrentKafkaListenerContainerFactory<String, SinkEvent> {
-        val factory = ConcurrentKafkaListenerContainerFactory<String, SinkEvent>()
+    fun partyListenerContainerFactory(): ConcurrentKafkaListenerContainerFactory<String, MachineEvent> {
+        val factory = ConcurrentKafkaListenerContainerFactory<String, MachineEvent>()
         val consumerGroup: String = consumerGroupIdService.generateGroupId(PARTY_CONSUMER_GROUP_NAME)
-        initDefaultListenerProperties<SinkEvent>(
+        initDefaultListenerProperties<MachineEvent>(
             factory,
             consumerGroup,
-            SinkEventDeserializer(),
+            MachineEventDeserializer(),
             kafkaProperties.maxPollRecords
         )
         return factory

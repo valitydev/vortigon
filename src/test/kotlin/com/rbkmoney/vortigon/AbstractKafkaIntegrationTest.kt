@@ -7,7 +7,7 @@ import com.rbkmoney.kafka.common.serialization.ThriftSerializer
 import com.rbkmoney.machinegun.eventsink.MachineEvent
 import com.rbkmoney.machinegun.eventsink.SinkEvent
 import com.rbkmoney.machinegun.msgpack.Value
-import com.rbkmoney.vortigon.serializer.SinkEventDeserializer
+import com.rbkmoney.vortigon.serializer.MachineEventDeserializer
 import mu.KotlinLogging
 import org.apache.kafka.clients.consumer.Consumer
 import org.apache.kafka.clients.consumer.ConsumerConfig
@@ -81,7 +81,7 @@ abstract class AbstractKafkaIntegrationTest : PostgresAbstractTest() {
 
         private fun <T> initTopic(topicName: String) {
             val consumer = createConsumer<T>(
-                SinkEventDeserializer::class.java
+                MachineEventDeserializer::class.java
             )
             try {
                 consumer.subscribe(listOf(topicName))
