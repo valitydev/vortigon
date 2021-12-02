@@ -366,7 +366,6 @@ object PartyEventBuilder {
         return Claim(
             EnhancedRandom.random(Long::class.java),
             claimStatus,
-            emptyList(),
             EnhancedRandom.random(Int::class.java),
             TypeUtil.temporalToString(LocalDateTime.now())
         )
