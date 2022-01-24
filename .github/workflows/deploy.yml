@@ -1,0 +1,13 @@
+name: Deploy Docker Image
+
+on:
+  push:
+    branches:
+      - 'master'
+
+jobs:
+  build-and-deploy:
+    uses: valitydev/base-workflow/.github/workflows/maven-service-deploy.yml@8570aa3052bc067bfcf824230ad12e9c6aca66c9
+    secrets:
+      github-token: ${{ secrets.GITHUB_TOKEN }}
+      mm-webhook-url: ${{ secrets.MATTERMOST_WEBHOOK_URL }}
