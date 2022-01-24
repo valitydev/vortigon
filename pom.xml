@@ -41,6 +41,7 @@
         <vortigon-proto.version>1.13-0c92608</vortigon-proto.version>
         <testcontainers.version>1.14.3</testcontainers.version>
         <schedlock.version>4.25.0</schedlock.version>
+        <shared-resources.version>1.4.0</shared-resources.version>
     </properties>
 
     <dependencies>
