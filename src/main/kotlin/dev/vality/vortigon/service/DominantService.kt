@@ -1,10 +1,10 @@
 package dev.vality.vortigon.service
 
+import dev.vality.damsel.domain_config.Operation
+import dev.vality.damsel.domain_config.RepositorySrv
 import dev.vality.vortigon.extension.toJson
 import dev.vality.vortigon.handler.dominant.DominantHandler
 import dev.vality.vortigon.repository.DominantDao
-import dev.vality.damsel.domain_config.Operation
-import dev.vality.damsel.domain_config.RepositorySrv
 import mu.KotlinLogging
 import org.springframework.stereotype.Service
 import java.util.Map

@@ -1,10 +1,10 @@
 package dev.vality.vortigon.config
 
 import com.rbkmoney.kafka.common.exception.handler.SeekToCurrentWithSleepBatchErrorHandler
-import dev.vality.vortigon.config.properties.KafkaProperties
-import dev.vality.vortigon.serializer.MachineEventDeserializer
 import dev.vality.machinegun.eventsink.MachineEvent
 import dev.vality.mg.event.sink.service.ConsumerGroupIdService
+import dev.vality.vortigon.config.properties.KafkaProperties
+import dev.vality.vortigon.serializer.MachineEventDeserializer
 import lombok.RequiredArgsConstructor
 import mu.KotlinLogging
 import org.apache.kafka.clients.consumer.ConsumerConfig

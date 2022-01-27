@@ -3,7 +3,10 @@ package dev.vality.vortigon.repository
 import dev.vality.dao.impl.AbstractGenericDao
 import dev.vality.geck.common.util.TypeUtil
 import dev.vality.mapper.RecordRowMapper
-import dev.vality.vortigon.domain.db.Tables.*
+import dev.vality.vortigon.domain.db.Tables.CATEGORY
+import dev.vality.vortigon.domain.db.Tables.CONTRACT
+import dev.vality.vortigon.domain.db.Tables.PARTY
+import dev.vality.vortigon.domain.db.Tables.SHOP
 import dev.vality.vortigon.domain.db.tables.pojos.Party
 import dev.vality.vortigon.repository.model.PartyFilter
 import org.jooq.Condition

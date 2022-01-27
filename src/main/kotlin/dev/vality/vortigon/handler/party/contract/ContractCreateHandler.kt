@@ -16,10 +16,9 @@ import dev.vality.vortigon.handler.constant.HandleEventType
 import dev.vality.vortigon.repository.ContractDao
 import dev.vality.vortigon.repository.ContractorDao
 import mu.KotlinLogging
-import org.jooq.impl.DSL.domain
 import org.springframework.core.annotation.Order
 import org.springframework.stereotype.Component
-import java.util.*
+import java.util.UUID
 
 private val log = KotlinLogging.logger {}
 

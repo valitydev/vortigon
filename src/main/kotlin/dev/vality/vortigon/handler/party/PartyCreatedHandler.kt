@@ -10,7 +10,6 @@ import dev.vality.vortigon.handler.ChangeHandler
 import dev.vality.vortigon.handler.constant.HandleEventType
 import dev.vality.vortigon.repository.PartyDao
 import mu.KotlinLogging
-import org.jooq.impl.DSL.domain
 import org.springframework.core.annotation.Order
 import org.springframework.stereotype.Component
 

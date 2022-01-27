@@ -2,7 +2,9 @@ package dev.vality.vortigon.repository
 
 import dev.vality.dao.impl.AbstractGenericDao
 import dev.vality.mapper.RecordRowMapper
-import dev.vality.vortigon.domain.db.Tables.*
+import dev.vality.vortigon.domain.db.Tables.CATEGORY
+import dev.vality.vortigon.domain.db.Tables.PARTY
+import dev.vality.vortigon.domain.db.Tables.SHOP
 import dev.vality.vortigon.domain.db.tables.pojos.Shop
 import org.springframework.stereotype.Repository
 import javax.sql.DataSource

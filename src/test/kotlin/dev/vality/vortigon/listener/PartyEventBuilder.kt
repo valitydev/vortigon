@@ -1,7 +1,44 @@
 package dev.vality.vortigon.listener
 
-import dev.vality.damsel.domain.*
-import dev.vality.damsel.payment_processing.*
+import dev.vality.damsel.domain.Active
+import dev.vality.damsel.domain.Blocked
+import dev.vality.damsel.domain.Blocking
+import dev.vality.damsel.domain.BusinessScheduleRef
+import dev.vality.damsel.domain.CategoryRef
+import dev.vality.damsel.domain.Contract
+import dev.vality.damsel.domain.ContractActive
+import dev.vality.damsel.domain.ContractStatus
+import dev.vality.damsel.domain.Contractor
+import dev.vality.damsel.domain.ContractorIdentificationLevel
+import dev.vality.damsel.domain.CurrencyRef
+import dev.vality.damsel.domain.LegalEntity
+import dev.vality.damsel.domain.PartyContactInfo
+import dev.vality.damsel.domain.PartyContractor
+import dev.vality.damsel.domain.Shop
+import dev.vality.damsel.domain.ShopAccount
+import dev.vality.damsel.domain.ShopDetails
+import dev.vality.damsel.domain.ShopLocation
+import dev.vality.damsel.domain.Suspended
+import dev.vality.damsel.domain.Suspension
+import dev.vality.damsel.domain.TermSetHierarchyRef
+import dev.vality.damsel.domain.Unblocked
+import dev.vality.damsel.payment_processing.Claim
+import dev.vality.damsel.payment_processing.ClaimAccepted
+import dev.vality.damsel.payment_processing.ClaimEffect
+import dev.vality.damsel.payment_processing.ClaimStatus
+import dev.vality.damsel.payment_processing.ContractEffect
+import dev.vality.damsel.payment_processing.ContractEffectUnit
+import dev.vality.damsel.payment_processing.ContractorEffect
+import dev.vality.damsel.payment_processing.ContractorEffectUnit
+import dev.vality.damsel.payment_processing.PartyChange
+import dev.vality.damsel.payment_processing.PartyCreated
+import dev.vality.damsel.payment_processing.PartyEventData
+import dev.vality.damsel.payment_processing.PartyRevisionChanged
+import dev.vality.damsel.payment_processing.ScheduleChanged
+import dev.vality.damsel.payment_processing.ShopBlocking
+import dev.vality.damsel.payment_processing.ShopEffect
+import dev.vality.damsel.payment_processing.ShopEffectUnit
+import dev.vality.damsel.payment_processing.ShopSuspension
 import dev.vality.geck.common.util.TypeUtil
 import dev.vality.geck.serializer.kit.mock.MockMode
 import dev.vality.geck.serializer.kit.mock.MockTBaseProcessor
@@ -13,7 +50,7 @@ import dev.vality.sink.common.serialization.impl.PartyEventDataSerializer
 import io.github.benas.randombeans.api.EnhancedRandom
 import java.time.Instant
 import java.time.LocalDateTime
-import java.util.*
+import java.util.UUID
 
 object PartyEventBuilder {
 
