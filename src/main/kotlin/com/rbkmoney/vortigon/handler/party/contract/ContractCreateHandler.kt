@@ -1,9 +1,5 @@
 package com.rbkmoney.vortigon.handler.party.contract
 
-import com.rbkmoney.damsel.payment_processing.PartyChange
-import com.rbkmoney.geck.common.util.TBaseUtil
-import com.rbkmoney.geck.common.util.TypeUtil
-import com.rbkmoney.machinegun.eventsink.MachineEvent
 import com.rbkmoney.vortigon.domain.db.enums.ContractStatus
 import com.rbkmoney.vortigon.domain.db.enums.ContractorType
 import com.rbkmoney.vortigon.domain.db.enums.LegalEntity
@@ -15,10 +11,14 @@ import com.rbkmoney.vortigon.handler.ChangeHandler
 import com.rbkmoney.vortigon.handler.constant.HandleEventType
 import com.rbkmoney.vortigon.repository.ContractDao
 import com.rbkmoney.vortigon.repository.ContractorDao
+import dev.vality.damsel.payment_processing.PartyChange
+import dev.vality.geck.common.util.TBaseUtil
+import dev.vality.geck.common.util.TypeUtil
+import dev.vality.machinegun.eventsink.MachineEvent
 import mu.KotlinLogging
 import org.springframework.core.annotation.Order
 import org.springframework.stereotype.Component
-import java.util.UUID
+import java.util.*
 
 private val log = KotlinLogging.logger {}
 
@@ -85,7 +85,7 @@ class ContractCreateHandler(
 
     private fun convertThriftContractor(
         event: MachineEvent,
-        contractor: com.rbkmoney.damsel.domain.Contractor,
+        contractor: dev.vality.damsel.domain.Contractor,
     ): Contractor {
         return Contractor().apply {
             this.partyId = event.sourceId
@@ -138,7 +138,7 @@ class ContractCreateHandler(
         }
     }
 
-    private fun getContractorId(contractCreated: com.rbkmoney.damsel.domain.Contract): String {
+    private fun getContractorId(contractCreated: dev.vality.damsel.domain.Contract): String {
         val contractorId: String = if (contractCreated.isSetContractorId) {
             return contractCreated.contractorId
         } else if (contractCreated.isSetContractor) {

@@ -1,7 +1,7 @@
 package com.rbkmoney.vortigon.extension
 
-import com.rbkmoney.geck.serializer.kit.json.JsonHandler
-import com.rbkmoney.geck.serializer.kit.tbase.TBaseProcessor
+import dev.vality.geck.serializer.kit.json.JsonHandler
+import dev.vality.geck.serializer.kit.tbase.TBaseProcessor
 import org.apache.thrift.TBase
 import org.apache.thrift.TFieldIdEnum
 

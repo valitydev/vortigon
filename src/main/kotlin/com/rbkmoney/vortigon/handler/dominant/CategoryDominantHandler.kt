@@ -1,7 +1,7 @@
 package com.rbkmoney.vortigon.handler.dominant
 
-import com.rbkmoney.damsel.domain.DomainObject
-import com.rbkmoney.damsel.domain_config.Operation
+import dev.vality.damsel.domain.DomainObject
+import dev.vality.damsel.domain_config.Operation
 import com.rbkmoney.vortigon.domain.db.tables.pojos.Category
 import com.rbkmoney.vortigon.extension.domainObject
 import com.rbkmoney.vortigon.repository.CategoryDao

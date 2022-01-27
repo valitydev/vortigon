@@ -1,10 +1,10 @@
 package com.rbkmoney.vortigon.service
 
-import com.rbkmoney.damsel.domain_config.Operation
-import com.rbkmoney.damsel.domain_config.RepositorySrv
 import com.rbkmoney.vortigon.extension.toJson
 import com.rbkmoney.vortigon.handler.dominant.DominantHandler
 import com.rbkmoney.vortigon.repository.DominantDao
+import dev.vality.damsel.domain_config.Operation
+import dev.vality.damsel.domain_config.RepositorySrv
 import mu.KotlinLogging
 import org.springframework.stereotype.Service
 import java.util.Map

@@ -1,8 +1,8 @@
 package com.rbkmoney.vortigon.config
 
-import com.rbkmoney.damsel.domain_config.RepositoryClientSrv
-import com.rbkmoney.damsel.domain_config.RepositorySrv
-import com.rbkmoney.woody.thrift.impl.http.THSpawnClientBuilder
+import dev.vality.damsel.domain_config.RepositoryClientSrv
+import dev.vality.damsel.domain_config.RepositorySrv
+import dev.vality.woody.thrift.impl.http.THSpawnClientBuilder
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration

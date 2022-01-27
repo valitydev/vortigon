@@ -1,9 +1,9 @@
 package com.rbkmoney.vortigon.handler.party
 
-import com.rbkmoney.damsel.payment_processing.PartyChange
-import com.rbkmoney.damsel.payment_processing.PartyEventData
-import com.rbkmoney.machinegun.eventsink.MachineEvent
-import com.rbkmoney.sink.common.parser.impl.MachineEventParser
+import dev.vality.damsel.payment_processing.PartyChange
+import dev.vality.damsel.payment_processing.PartyEventData
+import dev.vality.machinegun.eventsink.MachineEvent
+import dev.vality.sink.common.parser.impl.MachineEventParser
 import com.rbkmoney.vortigon.config.properties.KafkaProperties
 import com.rbkmoney.vortigon.handler.ChangeHandler
 import mu.KotlinLogging

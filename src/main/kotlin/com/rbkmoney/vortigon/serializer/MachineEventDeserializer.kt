@@ -1,7 +1,7 @@
 package com.rbkmoney.vortigon.serializer
 
-import com.rbkmoney.machinegun.eventsink.MachineEvent
-import com.rbkmoney.machinegun.eventsink.SinkEvent
+import dev.vality.machinegun.eventsink.MachineEvent
+import dev.vality.machinegun.eventsink.SinkEvent
 import mu.KotlinLogging
 import org.apache.kafka.common.serialization.Deserializer
 import org.apache.thrift.TDeserializer

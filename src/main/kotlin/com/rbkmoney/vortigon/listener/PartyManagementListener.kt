@@ -1,6 +1,6 @@
 package com.rbkmoney.vortigon.listener
 
-import com.rbkmoney.machinegun.eventsink.MachineEvent
+import dev.vality.machinegun.eventsink.MachineEvent
 import com.rbkmoney.vortigon.handler.party.PartyEventHandleManager
 import mu.KotlinLogging
 import org.springframework.kafka.annotation.KafkaListener

@@ -1,12 +1,12 @@
 package com.rbkmoney.vortigon
 
-import com.rbkmoney.damsel.payment_processing.PartyChange
-import com.rbkmoney.damsel.payment_processing.PartyEventData
-import com.rbkmoney.geck.common.util.TypeUtil
+import dev.vality.damsel.payment_processing.PartyChange
+import dev.vality.damsel.payment_processing.PartyEventData
+import dev.vality.geck.common.util.TypeUtil
 import com.rbkmoney.kafka.common.serialization.ThriftSerializer
-import com.rbkmoney.machinegun.eventsink.MachineEvent
-import com.rbkmoney.machinegun.eventsink.SinkEvent
-import com.rbkmoney.machinegun.msgpack.Value
+import dev.vality.machinegun.eventsink.MachineEvent
+import dev.vality.machinegun.eventsink.SinkEvent
+import dev.vality.machinegun.msgpack.Value
 import com.rbkmoney.vortigon.serializer.MachineEventDeserializer
 import mu.KotlinLogging
 import org.apache.kafka.clients.consumer.Consumer

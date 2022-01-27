@@ -1,16 +1,16 @@
 package com.rbkmoney.vortigon.service
 
-import com.rbkmoney.damsel.domain.Category
-import com.rbkmoney.damsel.domain.CategoryObject
-import com.rbkmoney.damsel.domain.CategoryRef
-import com.rbkmoney.damsel.domain.CategoryType
-import com.rbkmoney.damsel.domain.DomainObject
-import com.rbkmoney.damsel.domain_config.Commit
-import com.rbkmoney.damsel.domain_config.InsertOp
-import com.rbkmoney.damsel.domain_config.Operation
-import com.rbkmoney.damsel.domain_config.RemoveOp
-import com.rbkmoney.damsel.domain_config.RepositorySrv
-import com.rbkmoney.damsel.domain_config.UpdateOp
+import dev.vality.damsel.domain.Category
+import dev.vality.damsel.domain.CategoryObject
+import dev.vality.damsel.domain.CategoryRef
+import dev.vality.damsel.domain.CategoryType
+import dev.vality.damsel.domain.DomainObject
+import dev.vality.damsel.domain_config.Commit
+import dev.vality.damsel.domain_config.InsertOp
+import dev.vality.damsel.domain_config.Operation
+import dev.vality.damsel.domain_config.RemoveOp
+import dev.vality.damsel.domain_config.RepositorySrv
+import dev.vality.damsel.domain_config.UpdateOp
 import com.rbkmoney.vortigon.PostgresAbstractTest
 import com.rbkmoney.vortigon.VortigonApplication
 import com.rbkmoney.vortigon.repository.CategoryDao

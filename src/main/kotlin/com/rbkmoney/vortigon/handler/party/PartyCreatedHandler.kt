@@ -1,8 +1,8 @@
 package com.rbkmoney.vortigon.handler.party
 
-import com.rbkmoney.damsel.payment_processing.PartyChange
-import com.rbkmoney.geck.common.util.TypeUtil
-import com.rbkmoney.machinegun.eventsink.MachineEvent
+import dev.vality.damsel.payment_processing.PartyChange
+import dev.vality.geck.common.util.TypeUtil
+import dev.vality.machinegun.eventsink.MachineEvent
 import com.rbkmoney.vortigon.domain.db.enums.Blocking
 import com.rbkmoney.vortigon.domain.db.enums.Suspension
 import com.rbkmoney.vortigon.domain.db.tables.pojos.Party
@@ -10,6 +10,7 @@ import com.rbkmoney.vortigon.handler.ChangeHandler
 import com.rbkmoney.vortigon.handler.constant.HandleEventType
 import com.rbkmoney.vortigon.repository.PartyDao
 import mu.KotlinLogging
+import org.jooq.impl.DSL.domain
 import org.springframework.core.annotation.Order
 import org.springframework.stereotype.Component
 

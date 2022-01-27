@@ -1,11 +1,11 @@
 package com.rbkmoney.vortigon.resource.handler
 
-import com.rbkmoney.damsel.vortigon.ContractFilter
-import com.rbkmoney.damsel.vortigon.PartyFilter
-import com.rbkmoney.damsel.vortigon.PartyFilterRequest
-import com.rbkmoney.damsel.vortigon.PaymentInstitutionRealm
-import com.rbkmoney.damsel.vortigon.ShopFilter
-import com.rbkmoney.geck.common.util.TypeUtil
+import dev.vality.damsel.vortigon.ContractFilter
+import dev.vality.damsel.vortigon.PartyFilter
+import dev.vality.damsel.vortigon.PartyFilterRequest
+import dev.vality.damsel.vortigon.PaymentInstitutionRealm
+import dev.vality.damsel.vortigon.ShopFilter
+import dev.vality.geck.common.util.TypeUtil
 import com.rbkmoney.vortigon.PostgresAbstractTest
 import com.rbkmoney.vortigon.VortigonApplication
 import com.rbkmoney.vortigon.domain.db.tables.pojos.Category

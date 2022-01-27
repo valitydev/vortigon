@@ -1,7 +1,7 @@
 package com.rbkmoney.vortigon.repository
 
 import com.rbkmoney.dao.impl.AbstractGenericDao
-import com.rbkmoney.geck.common.util.TypeUtil
+import dev.vality.geck.common.util.TypeUtil
 import com.rbkmoney.mapper.RecordRowMapper
 import com.rbkmoney.vortigon.domain.db.Tables.CATEGORY
 import com.rbkmoney.vortigon.domain.db.Tables.CONTRACT

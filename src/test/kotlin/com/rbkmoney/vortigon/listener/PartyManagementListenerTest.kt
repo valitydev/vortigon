@@ -1,9 +1,9 @@
 package com.rbkmoney.vortigon.listener
 
-import com.rbkmoney.damsel.domain.Category
-import com.rbkmoney.damsel.domain.CategoryType
-import com.rbkmoney.geck.common.util.TypeUtil
-import com.rbkmoney.machinegun.eventsink.SinkEvent
+import dev.vality.damsel.domain.Category
+import dev.vality.damsel.domain.CategoryType
+import dev.vality.geck.common.util.TypeUtil
+import dev.vality.machinegun.eventsink.SinkEvent
 import com.rbkmoney.vortigon.AbstractKafkaIntegrationTest
 import com.rbkmoney.vortigon.VortigonApplication
 import com.rbkmoney.vortigon.domain.db.enums.ContractStatus

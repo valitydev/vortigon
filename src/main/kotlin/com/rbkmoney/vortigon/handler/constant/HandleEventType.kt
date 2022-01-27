@@ -1,9 +1,9 @@
 package com.rbkmoney.vortigon.handler.constant
 
-import com.rbkmoney.geck.filter.Condition
-import com.rbkmoney.geck.filter.PathConditionFilter
-import com.rbkmoney.geck.filter.condition.IsNullCondition
-import com.rbkmoney.geck.filter.rule.PathConditionRule
+import dev.vality.geck.filter.Condition
+import dev.vality.geck.filter.PathConditionFilter
+import dev.vality.geck.filter.condition.IsNullCondition
+import dev.vality.geck.filter.rule.PathConditionRule
 
 enum class HandleEventType(path: String, vararg conditions: Condition<Any>) {
 

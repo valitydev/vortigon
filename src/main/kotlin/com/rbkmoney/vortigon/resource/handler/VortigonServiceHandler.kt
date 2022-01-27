@@ -1,9 +1,9 @@
 package com.rbkmoney.vortigon.resource.handler
 
-import com.rbkmoney.damsel.domain.CategoryType
-import com.rbkmoney.damsel.vortigon.PartyFilterRequest
-import com.rbkmoney.damsel.vortigon.PaymentInstitutionRealm
-import com.rbkmoney.damsel.vortigon.VortigonServiceSrv
+import dev.vality.damsel.domain.CategoryType
+import dev.vality.damsel.vortigon.PartyFilterRequest
+import dev.vality.damsel.vortigon.PaymentInstitutionRealm
+import dev.vality.damsel.vortigon.VortigonServiceSrv
 import com.rbkmoney.vortigon.domain.db.tables.pojos.Party
 import com.rbkmoney.vortigon.repository.PartyDao
 import com.rbkmoney.vortigon.repository.ShopDao

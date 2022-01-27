@@ -1,7 +1,7 @@
 package com.rbkmoney.vortigon.handler.converter
 
-import com.rbkmoney.damsel.domain.Contractor
-import com.rbkmoney.geck.common.util.TBaseUtil
+import dev.vality.damsel.domain.Contractor
+import dev.vality.geck.common.util.TBaseUtil
 import com.rbkmoney.vortigon.domain.db.enums.ContractorType
 import com.rbkmoney.vortigon.domain.db.enums.LegalEntity
 import com.rbkmoney.vortigon.domain.db.enums.PrivateEntity

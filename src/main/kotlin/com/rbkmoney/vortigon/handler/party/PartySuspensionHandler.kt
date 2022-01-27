@@ -1,9 +1,9 @@
 package com.rbkmoney.vortigon.handler.party
 
-import com.rbkmoney.damsel.payment_processing.PartyChange
-import com.rbkmoney.geck.common.util.TBaseUtil
-import com.rbkmoney.geck.common.util.TypeUtil
-import com.rbkmoney.machinegun.eventsink.MachineEvent
+import dev.vality.damsel.payment_processing.PartyChange
+import dev.vality.geck.common.util.TBaseUtil
+import dev.vality.geck.common.util.TypeUtil
+import dev.vality.machinegun.eventsink.MachineEvent
 import com.rbkmoney.vortigon.domain.db.enums.Suspension
 import com.rbkmoney.vortigon.domain.db.tables.pojos.Party
 import com.rbkmoney.vortigon.handler.ChangeHandler

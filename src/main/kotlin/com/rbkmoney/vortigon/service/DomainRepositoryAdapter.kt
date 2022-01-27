@@ -1,10 +1,10 @@
 package com.rbkmoney.vortigon.service
 
-import com.rbkmoney.damsel.domain.Category
-import com.rbkmoney.damsel.domain.CategoryRef
-import com.rbkmoney.damsel.domain_config.Head
-import com.rbkmoney.damsel.domain_config.Reference
-import com.rbkmoney.damsel.domain_config.RepositoryClientSrv
+import dev.vality.damsel.domain.Category
+import dev.vality.damsel.domain.CategoryRef
+import dev.vality.damsel.domain_config.Head
+import dev.vality.damsel.domain_config.Reference
+import dev.vality.damsel.domain_config.RepositoryClientSrv
 import org.springframework.cache.annotation.Cacheable
 import org.springframework.stereotype.Component
 
@@ -17,7 +17,7 @@ class DomainRepositoryAdapter(
     fun getCategory(categoryRef: CategoryRef): Category {
         val versionedObject = repositoryClient.checkoutObject(
             Reference.head(Head()),
-            com.rbkmoney.damsel.domain.Reference.category(categoryRef)
+            dev.vality.damsel.domain.Reference.category(categoryRef)
         )
         if (!versionedObject.isSetObject || !versionedObject.getObject().isSetCategory || !versionedObject.getObject().category.isSetData) {
             throw IllegalArgumentException("Unknown category: ${categoryRef.id}")

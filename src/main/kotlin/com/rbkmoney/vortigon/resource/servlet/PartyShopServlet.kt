@@ -1,7 +1,7 @@
 package com.rbkmoney.vortigon.resource.servlet
 
-import com.rbkmoney.damsel.vortigon.VortigonServiceSrv
-import com.rbkmoney.woody.thrift.impl.http.THServiceBuilder
+import dev.vality.damsel.vortigon.VortigonServiceSrv
+import dev.vality.woody.thrift.impl.http.THServiceBuilder
 import javax.servlet.GenericServlet
 import javax.servlet.Servlet
 import javax.servlet.ServletConfig

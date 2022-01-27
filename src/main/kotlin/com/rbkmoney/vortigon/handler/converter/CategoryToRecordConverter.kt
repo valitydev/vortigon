@@ -1,7 +1,7 @@
 package com.rbkmoney.vortigon.handler.converter
 
-import com.rbkmoney.damsel.domain.Category
-import com.rbkmoney.damsel.domain.CategoryObject
+import dev.vality.damsel.domain.Category
+import dev.vality.damsel.domain.CategoryObject
 import org.springframework.stereotype.Component
 
 @Component

@@ -1,7 +1,7 @@
 package com.rbkmoney.vortigon.extension
 
-import com.rbkmoney.damsel.domain.DomainObject
-import com.rbkmoney.damsel.domain_config.Operation
+import dev.vality.damsel.domain.DomainObject
+import dev.vality.damsel.domain_config.Operation
 
 fun Operation.domainObject(): DomainObject {
     return if (this.isSetInsert) {
