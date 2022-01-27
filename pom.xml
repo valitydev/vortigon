@@ -394,7 +394,7 @@
                             <inputSchema>${db.schema}</inputSchema>
                         </database>
                         <target>
-                            <packageName>com.rbkmoney.vortigon.domain.db</packageName>
+                            <packageName>dev.vality.vortigon.domain.db</packageName>
                             <directory>target/generated-sources/jooq</directory>
                         </target>
                     </generator>

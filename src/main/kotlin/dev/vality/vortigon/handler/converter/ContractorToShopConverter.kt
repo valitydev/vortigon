@@ -1,0 +1,40 @@
+package dev.vality.vortigon.handler.converter
+
+import dev.vality.vortigon.domain.db.tables.pojos.Contractor
+import dev.vality.vortigon.domain.db.tables.pojos.Shop
+import org.springframework.stereotype.Component
+
+@Component
+class ContractorToShopConverter : DomainConverter<dev.vality.vortigon.domain.db.tables.pojos.Contractor, dev.vality.vortigon.domain.db.tables.pojos.Shop> {
+    override fun convert(contractor: dev.vality.vortigon.domain.db.tables.pojos.Contractor): dev.vality.vortigon.domain.db.tables.pojos.Shop {
+        return dev.vality.vortigon.domain.db.tables.pojos.Shop().apply {
+            contractorType = contractor.contractorType
+            regUserEmail = contractor.regUserEmail
+            legalEntityType = contractor.legalEntityType
+            russianLegalEntityName = contractor.russianLegalEntityName
+            russianLegalEntityRegisteredNumber = contractor.russianLegalEntityRegisteredNumber
+            russianLegalEntityInn = contractor.russianLegalEntityInn
+            russianLegalEntityActualAddress = contractor.russianLegalEntityActualAddress
+            russianLegalEntityPostAddress = contractor.russianLegalEntityPostAddress
+            russianLegalEntityRepresentativePosition = contractor.russianLegalEntityRepresentativePosition
+            russianLegalEntityRepresentativeFullName = contractor.russianLegalEntityRepresentativeFullName
+            russianLegalEntityRepresentativeDocument = contractor.russianLegalEntityRepresentativeDocument
+            russianLegalEntityBankAccount = contractor.russianLegalEntityBankAccount
+            russianLegalEntityBankName = contractor.russianLegalEntityBankName
+            russianLegalEntityBankPostAccount = contractor.russianLegalEntityBankPostAccount
+            russianLegalEntityBankBik = contractor.russianLegalEntityBankBik
+            internationalLegalEntityName = contractor.internationalLegalEntityName
+            internationalLegalEntityTradingName = contractor.internationalLegalEntityTradingName
+            internationalLegalEntityRegisteredAddress = contractor.internationalLegalEntityRegisteredAddress
+            internationalActualAddress = contractor.internationalActualAddress
+            internationalLegalEntityRegisteredNumber = contractor.internationalLegalEntityRegisteredNumber
+            internationalLegalEntityCountryCode = contractor.internationalLegalEntityCountryCode
+            privateEntityType = contractor.privateEntityType
+            russianPrivateEntityEmail = contractor.russianPrivateEntityEmail
+            russianPrivateEntityPhoneNumber = contractor.russianPrivateEntityPhoneNumber
+            russianPrivateEntityFirstName = contractor.russianPrivateEntityFirstName
+            russianPrivateEntitySecondName = contractor.russianPrivateEntitySecondName
+            russianPrivateEntityMiddleName = contractor.russianPrivateEntityMiddleName
+        }
+    }
+}
