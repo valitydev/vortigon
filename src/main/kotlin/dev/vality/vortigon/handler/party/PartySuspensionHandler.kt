@@ -24,12 +24,12 @@ class PartySuspensionHandler(
     override fun handleChange(change: PartyChange, event: MachineEvent) {
         log.debug { "Handle party suspension change: $change" }
         val partySuspension = change.partySuspension
-        val party = partyDao.findByPartyId(event.sourceId) ?: dev.vality.vortigon.domain.db.tables.pojos.Party()
+        val party = partyDao.findByPartyId(event.sourceId) ?: Party()
         val updateParty = party.apply {
             partyId = event.sourceId
             eventId = event.eventId
             eventTime = TypeUtil.stringToLocalDateTime(event.createdAt)
-            suspension = TBaseUtil.unionFieldToEnum(partySuspension, dev.vality.vortigon.domain.db.enums.Suspension::class.java)
+            suspension = TBaseUtil.unionFieldToEnum(partySuspension, Suspension::class.java)
             if (partySuspension.isSetActive) {
                 suspensionActiveSince = TypeUtil.stringToLocalDateTime(partySuspension.active.since)
             } else if (partySuspension.isSetSuspended) {

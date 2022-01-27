@@ -25,12 +25,12 @@ class ShopBlockingHandler(
         log.debug { "Shop account change: $change" }
         val shopId = change.shopBlocking.shopId
         val partyId = event.sourceId
-        val updateShop = dev.vality.vortigon.domain.db.tables.pojos.Shop().apply {
+        val updateShop = Shop().apply {
             this.partyId = partyId
             this.shopId = shopId
             this.eventId = event.eventId
             eventTime = TypeUtil.stringToLocalDateTime(event.createdAt)
-            blocking = TBaseUtil.unionFieldToEnum(change.shopBlocking.getBlocking(), dev.vality.vortigon.domain.db.enums.Blocking::class.java)
+            blocking = TBaseUtil.unionFieldToEnum(change.shopBlocking.getBlocking(), Blocking::class.java)
             val blocking = change.shopBlocking.blocking
             if (blocking.isSetUnblocked) {
                 unblockedReason = blocking.unblocked.reason

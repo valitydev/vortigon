@@ -22,7 +22,7 @@ class CategoryDominantHandler(
         val categoryObject = dominantObject.category
         if (operation.isSetInsert) {
             log.info("Save category operation. id=${categoryObject.getRef().getId()}; version=$versionId")
-            val category = conversionService.convert(categoryObject, dev.vality.vortigon.domain.db.tables.pojos.Category::class.java)!!.apply {
+            val category = conversionService.convert(categoryObject, Category::class.java)!!.apply {
                 this.versionId = versionId
             }
             categoryDao.save(category)
@@ -30,13 +30,13 @@ class CategoryDominantHandler(
             log.info("Update category operation. id=${categoryObject.getRef().getId()}; version=$versionId")
             val oldObject = operation.update.oldObject
             val oldCategory = oldObject.category
-            val category = conversionService.convert(categoryObject, dev.vality.vortigon.domain.db.tables.pojos.Category::class.java)!!.apply {
+            val category = conversionService.convert(categoryObject, Category::class.java)!!.apply {
                 this.versionId = versionId
             }
             categoryDao.update(oldCategory.getRef().getId(), category)
         } else if (operation.isSetRemove) {
             log.info("Remove category operation. id=${categoryObject.getRef().getId()} version=$versionId")
-            val category = conversionService.convert(categoryObject, dev.vality.vortigon.domain.db.tables.pojos.Category::class.java)!!.apply {
+            val category = conversionService.convert(categoryObject, Category::class.java)!!.apply {
                 this.versionId = versionId
             }
             categoryDao.removeCategory(category)

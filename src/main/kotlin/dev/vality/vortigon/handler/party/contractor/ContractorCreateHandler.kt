@@ -33,12 +33,12 @@ class ContractorCreateHandler(
             val contractorEffect = claimEffect.contractorEffect
             val partyContractor = contractorEffect.effect.created
             val contractor = partyContractor.contractor
-            val contractorDomain = conversionService.convert(contractor, dev.vality.vortigon.domain.db.tables.pojos.Contractor::class.java)!!.apply {
+            val contractorDomain = conversionService.convert(contractor, Contractor::class.java)!!.apply {
                 partyId = event.sourceId
                 eventId = event.eventId
                 eventTime = TypeUtil.stringToLocalDateTime(event.createdAt)
                 contractorId = contractorEffect.id
-                contractorIdentificationLevel = dev.vality.vortigon.domain.db.enums.ContractorIdentificationLvl.valueOf(partyContractor.status.name)
+                contractorIdentificationLevel = ContractorIdentificationLvl.valueOf(partyContractor.status.name)
             }
             log.debug { "Save contractor: $contractor" }
             contractorDao.save(contractorDomain)

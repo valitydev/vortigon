@@ -1,7 +1,7 @@
 package dev.vality.vortigon.repository
 
-import com.rbkmoney.dao.impl.AbstractGenericDao
-import com.rbkmoney.mapper.RecordRowMapper
+import dev.vality.dao.impl.AbstractGenericDao
+import dev.vality.mapper.RecordRowMapper
 import dev.vality.vortigon.domain.db.Tables.CATEGORY
 import dev.vality.vortigon.domain.db.tables.pojos.Category
 import org.jooq.Query
@@ -11,15 +11,15 @@ import javax.sql.DataSource
 @Repository
 class CategoryDao(postgresDatasource: DataSource) : AbstractGenericDao(postgresDatasource) {
 
-    private val rowMapper = RecordRowMapper(CATEGORY, dev.vality.vortigon.domain.db.tables.pojos.Category::class.java)
+    private val rowMapper = RecordRowMapper(CATEGORY, Category::class.java)
 
-    fun save(category: dev.vality.vortigon.domain.db.tables.pojos.Category) {
+    fun save(category: Category) {
         val record = dslContext.newRecord(CATEGORY, category)
         val query = dslContext.insertInto(CATEGORY).set(record)
         execute(query)
     }
 
-    fun update(categoryId: Int, category: dev.vality.vortigon.domain.db.tables.pojos.Category) {
+    fun update(categoryId: Int, category: Category) {
         val query = dslContext.update(CATEGORY)
             .set(CATEGORY.VERSION_ID, category.versionId)
             .set(CATEGORY.NAME, category.name)
@@ -29,7 +29,7 @@ class CategoryDao(postgresDatasource: DataSource) : AbstractGenericDao(postgresD
         execute(query)
     }
 
-    fun removeCategory(category: dev.vality.vortigon.domain.db.tables.pojos.Category) {
+    fun removeCategory(category: Category) {
         val query = dslContext.update(CATEGORY)
             .set(CATEGORY.DELETED, true)
             .set(CATEGORY.VERSION_ID, category.versionId)
@@ -37,7 +37,7 @@ class CategoryDao(postgresDatasource: DataSource) : AbstractGenericDao(postgresD
         execute(query)
     }
 
-    fun getCategory(categoryId: Int, versionId: Long): dev.vality.vortigon.domain.db.tables.pojos.Category {
+    fun getCategory(categoryId: Int, versionId: Long): Category {
         val query: Query = dslContext.selectFrom(CATEGORY)
             .where(CATEGORY.CATEGORY_ID.eq(categoryId))
             .and(CATEGORY.VERSION_ID.eq(versionId))

@@ -24,12 +24,12 @@ class PartyBlockingHandler(
     override fun handleChange(change: PartyChange, event: MachineEvent) {
         log.debug { "Handle party blocking change: $change" }
         val partyBlocking = change.partyBlocking
-        val party = partyDao.findByPartyId(event.sourceId) ?: dev.vality.vortigon.domain.db.tables.pojos.Party()
+        val party = partyDao.findByPartyId(event.sourceId) ?: Party()
         val updateParty = party.apply {
             partyId = event.sourceId
             eventId = event.eventId
             eventTime = TypeUtil.stringToLocalDateTime(event.createdAt)
-            blocking = TBaseUtil.unionFieldToEnum(partyBlocking, dev.vality.vortigon.domain.db.enums.Blocking::class.java)
+            blocking = TBaseUtil.unionFieldToEnum(partyBlocking, Blocking::class.java)
             if (partyBlocking.isSetBlocked) {
                 blockedReason = partyBlocking.blocked.reason
                 blockedSince = TypeUtil.stringToLocalDateTime(partyBlocking.blocked.since)

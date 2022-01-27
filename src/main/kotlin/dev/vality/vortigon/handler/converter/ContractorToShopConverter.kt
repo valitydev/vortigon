@@ -5,9 +5,9 @@ import dev.vality.vortigon.domain.db.tables.pojos.Shop
 import org.springframework.stereotype.Component
 
 @Component
-class ContractorToShopConverter : DomainConverter<dev.vality.vortigon.domain.db.tables.pojos.Contractor, dev.vality.vortigon.domain.db.tables.pojos.Shop> {
-    override fun convert(contractor: dev.vality.vortigon.domain.db.tables.pojos.Contractor): dev.vality.vortigon.domain.db.tables.pojos.Shop {
-        return dev.vality.vortigon.domain.db.tables.pojos.Shop().apply {
+class ContractorToShopConverter : DomainConverter<Contractor, Shop> {
+    override fun convert(contractor: Contractor): Shop {
+        return Shop().apply {
             contractorType = contractor.contractorType
             regUserEmail = contractor.regUserEmail
             legalEntityType = contractor.legalEntityType

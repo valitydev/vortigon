@@ -26,15 +26,15 @@ class PartyCreatedHandler(
         log.debug { "Handle party created change: $change" }
         val partyCreated = change.partyCreated
         val partyCreatedAt = TypeUtil.stringToLocalDateTime(partyCreated.createdAt)
-        val party = dev.vality.vortigon.domain.db.tables.pojos.Party().apply {
+        val party = Party().apply {
             eventId = event.eventId
             eventTime = TypeUtil.stringToLocalDateTime(event.createdAt)
             partyId = partyCreated.getId()
             createdAt = partyCreatedAt
             email = partyCreated.contactInfo.getEmail()
-            blocking = dev.vality.vortigon.domain.db.enums.Blocking.unblocked
+            blocking = Blocking.unblocked
             unblockedSince = partyCreatedAt
-            suspension = dev.vality.vortigon.domain.db.enums.Suspension.active
+            suspension = Suspension.active
             suspensionActiveSince = partyCreatedAt
             revisionId = "0"
             revisionChangedAt = partyCreatedAt

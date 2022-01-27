@@ -22,7 +22,7 @@ class PartyRevisionHandler(
     override fun handleChange(change: PartyChange, event: MachineEvent) {
         log.debug { "Handle party revision change: $change" }
         val partyRevisionChanged = change.revisionChanged
-        val party = partyDao.findByPartyId(event.sourceId) ?: dev.vality.vortigon.domain.db.tables.pojos.Party()
+        val party = partyDao.findByPartyId(event.sourceId) ?: Party()
         val updateParty = party.apply {
             partyId = event.sourceId
             eventId = event.eventId

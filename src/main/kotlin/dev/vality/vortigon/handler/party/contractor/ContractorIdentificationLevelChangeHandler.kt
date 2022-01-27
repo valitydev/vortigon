@@ -30,13 +30,13 @@ class ContractorIdentificationLevelChangeHandler(
             val contractorEffect = claimEffect.contractorEffect
             val identificationLevelChanged = contractorEffect.effect.identificationLevelChanged
             val contractor =
-                contractorDao.findByPartyIdAndContractorId(event.sourceId, contractorEffect.id) ?: dev.vality.vortigon.domain.db.tables.pojos.Contractor()
-            val updateContractor = dev.vality.vortigon.domain.db.tables.pojos.Contractor().apply {
+                contractorDao.findByPartyIdAndContractorId(event.sourceId, contractorEffect.id) ?: Contractor()
+            val updateContractor = Contractor().apply {
                 partyId = event.sourceId
                 eventId = event.eventId
                 eventTime = TypeUtil.stringToLocalDateTime(event.createdAt)
                 contractorId = contractorEffect.id
-                contractorIdentificationLevel = dev.vality.vortigon.domain.db.enums.ContractorIdentificationLvl.valueOf(identificationLevelChanged.name)
+                contractorIdentificationLevel = ContractorIdentificationLvl.valueOf(identificationLevelChanged.name)
             }
             beanMerger.mergeEvent(updateContractor, contractor)
             log.debug { "Save contractor: $contractor" }

@@ -1,6 +1,6 @@
 package dev.vality.vortigon.repository
 
-import com.rbkmoney.dao.impl.AbstractGenericDao
+import dev.vality.dao.impl.AbstractGenericDao
 import dev.vality.vortigon.domain.db.Tables.DOMINANT
 import dev.vality.vortigon.domain.db.tables.pojos.Dominant
 import org.springframework.stereotype.Repository
@@ -18,7 +18,7 @@ class DominantDao(postgresDatasource: DataSource) : AbstractGenericDao(postgresD
     }
 
     fun saveVersion(version: Long) {
-        val dominantRecord = dslContext.newRecord(DOMINANT, dev.vality.vortigon.domain.db.tables.pojos.Dominant(version))
+        val dominantRecord = dslContext.newRecord(DOMINANT, Dominant(version))
         val query = dslContext
             .insertInto(DOMINANT)
             .set(dominantRecord)

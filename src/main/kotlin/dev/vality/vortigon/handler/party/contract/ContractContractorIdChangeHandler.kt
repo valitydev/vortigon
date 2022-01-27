@@ -37,8 +37,8 @@ class ContractContractorIdChangeHandler(
             val contract = contractDao.findByPartyIdAndContractId(
                 event.sourceId,
                 contractEffect.contractId
-            ) ?: dev.vality.vortigon.domain.db.tables.pojos.Contract()
-            val updateContract = dev.vality.vortigon.domain.db.tables.pojos.Contract().apply {
+            ) ?: Contract()
+            val updateContract = Contract().apply {
                 partyId = event.sourceId
                 contractId = contractEffect.contractId
                 contractorId = contractEffect.effect.contractorChanged
@@ -62,7 +62,7 @@ class ContractContractorIdChangeHandler(
         log.debug { "Update shops: $currentShopStates" }
         if (currentShopStates?.isNotEmpty() == true) {
             val currentContractorState = contractorDao.findByPartyIdAndContractorId(event.sourceId, contractorId)
-            val newShop = conversionService.convert(currentContractorState, dev.vality.vortigon.domain.db.tables.pojos.Shop::class.java)!!
+            val newShop = conversionService.convert(currentContractorState, Shop::class.java)!!
             val shopList = currentShopStates.map { shop ->
                 beanMerger.mergeEvent(newShop, shop)
                 shop.eventId = event.eventId

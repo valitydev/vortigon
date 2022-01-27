@@ -1,5 +1,9 @@
 package dev.vality.vortigon.handler.party.contract
 
+import dev.vality.damsel.payment_processing.PartyChange
+import dev.vality.geck.common.util.TBaseUtil
+import dev.vality.geck.common.util.TypeUtil
+import dev.vality.machinegun.eventsink.MachineEvent
 import dev.vality.vortigon.domain.db.enums.ContractStatus
 import dev.vality.vortigon.domain.db.enums.ContractorType
 import dev.vality.vortigon.domain.db.enums.LegalEntity
@@ -11,11 +15,8 @@ import dev.vality.vortigon.handler.ChangeHandler
 import dev.vality.vortigon.handler.constant.HandleEventType
 import dev.vality.vortigon.repository.ContractDao
 import dev.vality.vortigon.repository.ContractorDao
-import dev.vality.damsel.payment_processing.PartyChange
-import dev.vality.geck.common.util.TBaseUtil
-import dev.vality.geck.common.util.TypeUtil
-import dev.vality.machinegun.eventsink.MachineEvent
 import mu.KotlinLogging
+import org.jooq.impl.DSL.domain
 import org.springframework.core.annotation.Order
 import org.springframework.stereotype.Component
 import java.util.*
@@ -36,14 +37,14 @@ class ContractCreateHandler(
         }?.forEach { claimEffect ->
             log.debug { "Contract create change. Handle effect: $claimEffect" }
             val contractCreated = claimEffect.contractEffect.effect.created
-            val contract = dev.vality.vortigon.domain.db.tables.pojos.Contract().apply {
+            val contract = Contract().apply {
                 partyId = event.sourceId
                 eventId = event.eventId
                 eventTime = TypeUtil.stringToLocalDateTime(event.createdAt)
                 createdAt = TypeUtil.stringToLocalDateTime(contractCreated.createdAt)
                 validSince = contractCreated.validSince?.let { TypeUtil.stringToLocalDateTime(it) }
                 validUntil = contractCreated.validUntil?.let { TypeUtil.stringToLocalDateTime(it) }
-                status = TBaseUtil.unionFieldToEnum(contractCreated.getStatus(), dev.vality.vortigon.domain.db.enums.ContractStatus::class.java)
+                status = TBaseUtil.unionFieldToEnum(contractCreated.getStatus(), ContractStatus::class.java)
                 if (contractCreated.status.isSetTerminated) {
                     statusTerminatedAt = TypeUtil.stringToLocalDateTime(contractCreated.status.terminated.terminatedAt)
                 }
@@ -86,17 +87,17 @@ class ContractCreateHandler(
     private fun convertThriftContractor(
         event: MachineEvent,
         contractor: dev.vality.damsel.domain.Contractor,
-    ): dev.vality.vortigon.domain.db.tables.pojos.Contractor {
-        return dev.vality.vortigon.domain.db.tables.pojos.Contractor().apply {
+    ): Contractor {
+        return Contractor().apply {
             this.partyId = event.sourceId
             eventId = event.eventId
             eventTime = TypeUtil.stringToLocalDateTime(event.createdAt)
             this.contractorId = contractorId
-            contractorType = TBaseUtil.unionFieldToEnum(contractor, dev.vality.vortigon.domain.db.enums.ContractorType::class.java)
+            contractorType = TBaseUtil.unionFieldToEnum(contractor, ContractorType::class.java)
             if (contractor.isSetRegisteredUser) {
                 regUserEmail = contractor.registeredUser.email
             } else if (contractor.isSetLegalEntity) {
-                legalEntityType = TBaseUtil.unionFieldToEnum(contractor.legalEntity, dev.vality.vortigon.domain.db.enums.LegalEntity::class.java)
+                legalEntityType = TBaseUtil.unionFieldToEnum(contractor.legalEntity, LegalEntity::class.java)
                 if (contractor.legalEntity.isSetRussianLegalEntity) {
                     val russianLegalEntity = contractor.legalEntity.russianLegalEntity
                     russianLegalEntityName = russianLegalEntity.registeredName
@@ -123,7 +124,7 @@ class ContractCreateHandler(
                 }
             } else if (contractor.isSetPrivateEntity) {
                 privateEntityType =
-                    TBaseUtil.unionFieldToEnum(contractor.privateEntity, dev.vality.vortigon.domain.db.enums.PrivateEntity::class.java)
+                    TBaseUtil.unionFieldToEnum(contractor.privateEntity, PrivateEntity::class.java)
                 if (contractor.privateEntity.isSetRussianPrivateEntity) {
                     val russianPrivateEntity = contractor.privateEntity.russianPrivateEntity
                     if (russianPrivateEntity.isSetContactInfo) {

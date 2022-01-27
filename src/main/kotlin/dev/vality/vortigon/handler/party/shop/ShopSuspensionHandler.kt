@@ -28,16 +28,16 @@ class ShopSuspensionHandler(
 
         val shop = shopDao.findByPartyIdAndShopId(partyId, shopId)
             ?: throw IllegalStateException("Shop not found. partyId=$partyId; shopId=$shopId")
-        val updateShop = dev.vality.vortigon.domain.db.tables.pojos.Shop().apply {
+        val updateShop = Shop().apply {
             this.partyId = partyId
             this.shopId = shopId
             eventId = event.eventId
             eventTime = TypeUtil.stringToLocalDateTime(event.createdAt)
             if (shopSuspension.suspension.isSetActive) {
-                suspension = dev.vality.vortigon.domain.db.enums.Suspension.active
+                suspension = Suspension.active
                 suspensionActiveSince = TypeUtil.stringToLocalDateTime(shopSuspension.suspension.active.since)
             } else if (shopSuspension.suspension.isSetSuspended) {
-                suspension = dev.vality.vortigon.domain.db.enums.Suspension.suspended
+                suspension = Suspension.suspended
                 suspensionSuspendedSince = TypeUtil.stringToLocalDateTime(shopSuspension.suspension.suspended.since)
             }
         }

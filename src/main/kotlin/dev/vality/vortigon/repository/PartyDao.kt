@@ -1,12 +1,9 @@
 package dev.vality.vortigon.repository
 
-import com.rbkmoney.dao.impl.AbstractGenericDao
+import dev.vality.dao.impl.AbstractGenericDao
 import dev.vality.geck.common.util.TypeUtil
-import com.rbkmoney.mapper.RecordRowMapper
-import dev.vality.vortigon.domain.db.Tables.CATEGORY
-import dev.vality.vortigon.domain.db.Tables.CONTRACT
-import dev.vality.vortigon.domain.db.Tables.PARTY
-import dev.vality.vortigon.domain.db.Tables.SHOP
+import dev.vality.mapper.RecordRowMapper
+import dev.vality.vortigon.domain.db.Tables.*
 import dev.vality.vortigon.domain.db.tables.pojos.Party
 import dev.vality.vortigon.repository.model.PartyFilter
 import org.jooq.Condition
@@ -20,16 +17,16 @@ import javax.sql.DataSource
 @Repository
 class PartyDao(postgresDatasource: DataSource) : AbstractGenericDao(postgresDatasource) {
 
-    private val rowMapper = RecordRowMapper(PARTY, dev.vality.vortigon.domain.db.tables.pojos.Party::class.java)
+    private val rowMapper = RecordRowMapper(PARTY, Party::class.java)
 
-    fun findByPartyId(partyId: String): dev.vality.vortigon.domain.db.tables.pojos.Party? {
+    fun findByPartyId(partyId: String): Party? {
         val query: Query = dslContext.selectFrom(PARTY)
             .where(PARTY.PARTY_ID.eq(partyId))
 
         return fetchOne(query, rowMapper)
     }
 
-    fun getPartyByFilter(filter: PartyFilter): List<dev.vality.vortigon.domain.db.tables.pojos.Party> {
+    fun getPartyByFilter(filter: PartyFilter): List<Party> {
         val from: SelectWhereStep<*> = dslContext.selectFrom(buildSelectFrom(filter))
         var condition: Condition = DSL.trueCondition()
         if (filter.email != null) {
@@ -70,7 +67,7 @@ class PartyDao(postgresDatasource: DataSource) : AbstractGenericDao(postgresData
         return from
     }
 
-    fun save(party: dev.vality.vortigon.domain.db.tables.pojos.Party) {
+    fun save(party: Party) {
         val record = dslContext.newRecord(PARTY, party)
         val query = dslContext.insertInto(PARTY).set(record)
             .onConflict(PARTY.PARTY_ID)

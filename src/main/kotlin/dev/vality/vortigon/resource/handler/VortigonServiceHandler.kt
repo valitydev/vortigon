@@ -33,7 +33,7 @@ class VortigonServiceHandler(
         log.info("Find party ids. filter={}", filter)
         val partyFilter = convertFilter(filter)
         return partyDao.getPartyByFilter(partyFilter).stream()
-            .map(dev.vality.vortigon.domain.db.tables.pojos.Party::getPartyId)
+            .map(Party::getPartyId)
             .collect(Collectors.toList())
     }
 

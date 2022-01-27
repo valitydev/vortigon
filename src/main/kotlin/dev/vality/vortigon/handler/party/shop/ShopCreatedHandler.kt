@@ -41,13 +41,13 @@ class ShopCreatedHandler(
             val contract = contractDao.findByPartyIdAndContractId(partyId, shopCreated.contractId)
                 ?: throw IllegalStateException("Contract not found. partyId=$partyId; contractId=${shopCreated.contractId}")
             val contractor = contractorDao.findByPartyIdAndContractorId(partyId, contract.contractorId)
-            val shop = conversionService.convert(contractor, dev.vality.vortigon.domain.db.tables.pojos.Shop::class.java)!!.apply {
+            val shop = conversionService.convert(contractor, Shop::class.java)!!.apply {
                 eventId = event.eventId
                 eventTime = TypeUtil.stringToLocalDateTime(event.createdAt)
                 this.shopId = shopId
                 this.partyId = partyId
                 createdAt = TypeUtil.stringToLocalDateTime(shopCreated.createdAt)
-                blocking = TBaseUtil.unionFieldToEnum(shopCreated.blocking, dev.vality.vortigon.domain.db.enums.Blocking::class.java)
+                blocking = TBaseUtil.unionFieldToEnum(shopCreated.blocking, Blocking::class.java)
                 if (shopCreated.getBlocking().isSetUnblocked) {
                     unblockedReason = shopCreated.blocking.unblocked.reason
                     unblockedSince = TypeUtil.stringToLocalDateTime(shopCreated.blocking.unblocked.since)

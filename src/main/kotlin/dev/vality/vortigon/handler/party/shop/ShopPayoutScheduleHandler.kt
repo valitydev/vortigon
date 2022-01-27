@@ -32,7 +32,7 @@ class ShopPayoutScheduleHandler(
 
             val shop = shopDao.findByPartyIdAndShopId(partyId, shopId)
                 ?: throw IllegalStateException("Shop not found. partyId=$partyId; shopId=$shopId")
-            val updateShop = dev.vality.vortigon.domain.db.tables.pojos.Shop().apply {
+            val updateShop = Shop().apply {
                 this.partyId = partyId
                 this.shopId = shopId
                 eventId = event.eventId
