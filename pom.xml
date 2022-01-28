@@ -4,9 +4,9 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>com.rbkmoney</groupId>
+        <groupId>dev.vality</groupId>
         <artifactId>service-parent-pom</artifactId>
-        <version>2.0.14</version>
+        <version>1.0.4</version>
     </parent>
 
     <artifactId>vortigon</artifactId>
@@ -14,7 +14,6 @@
     <packaging>jar</packaging>
 
     <name>vortigon</name>
-    <description></description>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -31,16 +30,17 @@
         <db.user>postgres</db.user>
         <db.password>postgres</db.password>
         <db.schema>vrt</db.schema>
-        <sink-common-lib.version>0.0.4</sink-common-lib.version>
-        <kafka-common-lib.version>0.1.9</kafka-common-lib.version>
+        <sink-common-lib.version>0.0.1</sink-common-lib.version>
+        <kafka-common-lib.version>0.0.1</kafka-common-lib.version>
         <serializer.version>0.6.11</serializer.version>
         <eventstock-client-damsel>1.2.10</eventstock-client-damsel>
-        <mg-event-sink-listener-spring-boot-starter.version>0.0.6-SNAPSHOT
+        <mg-event-sink-listener-spring-boot-starter.version>0.0.1
         </mg-event-sink-listener-spring-boot-starter.version>
-        <db-common-lib.version>0.0.5</db-common-lib.version>
-        <vortigon-proto.version>1.13-0c92608</vortigon-proto.version>
-        <testcontainers.version>1.14.3</testcontainers.version>
+        <db-common-lib.version>0.0.1</db-common-lib.version>
+        <vortigon-proto.version>1.16-d6ebfa4</vortigon-proto.version>
+        <testcontainers.version>1.16.3</testcontainers.version>
         <schedlock.version>4.25.0</schedlock.version>
+        <shared-resources.version>1.0.0</shared-resources.version>
     </properties>
 
     <dependencies>
@@ -55,59 +55,48 @@
             <version>${kotlin.version}</version>
         </dependency>
 
-        <!--rbkmoney-->
+        <!--Vality & rbkmoney-->
         <dependency>
-            <groupId>com.rbkmoney</groupId>
-            <artifactId>custom-metrics-spring-boot-starter</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.rbkmoney</groupId>
+            <groupId>dev.vality</groupId>
             <artifactId>mg-event-sink-listener-spring-boot-starter</artifactId>
             <version>${mg-event-sink-listener-spring-boot-starter.version}</version>
         </dependency>
         <dependency>
-            <groupId>com.rbkmoney</groupId>
-            <artifactId>custom-actuator-endpoints</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.rbkmoney.woody</groupId>
+            <groupId>dev.vality.woody</groupId>
             <artifactId>woody-thrift</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.rbkmoney</groupId>
+            <groupId>dev.vality</groupId>
             <artifactId>shared-resources</artifactId>
+            <version>${shared-resources.version}</version>
         </dependency>
         <dependency>
-            <groupId>com.rbkmoney</groupId>
+            <groupId>dev.vality</groupId>
             <artifactId>sink-common-lib</artifactId>
             <version>${sink-common-lib.version}</version>
         </dependency>
         <dependency>
-            <groupId>com.rbkmoney</groupId>
+            <groupId>dev.vality</groupId>
             <artifactId>kafka-common-lib</artifactId>
             <version>${kafka-common-lib.version}</version>
         </dependency>
         <dependency>
-            <groupId>com.rbkmoney</groupId>
+            <groupId>dev.vality</groupId>
             <artifactId>damsel</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.rbkmoney.geck</groupId>
+            <groupId>dev.vality.geck</groupId>
             <artifactId>serializer</artifactId>
+            <version>0.0.1</version>
         </dependency>
         <dependency>
-            <groupId>com.rbkmoney</groupId>
-            <artifactId>eventstock-client-damsel</artifactId>
-            <version>${eventstock-client-damsel}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.rbkmoney</groupId>
+            <groupId>dev.vality</groupId>
             <artifactId>db-common-lib</artifactId>
             <version>${db-common-lib.version}</version>
         </dependency>
         <dependency>
-            <groupId>com.rbkmoney</groupId>
-            <artifactId>vortigon-proto</artifactId>
+            <groupId>dev.vality</groupId>
+            <artifactId>party-shop-proto</artifactId>
             <version>${vortigon-proto.version}</version>
         </dependency>
 
@@ -169,6 +158,14 @@
             <artifactId>shedlock-provider-jdbc-template</artifactId>
             <version>${schedlock.version}</version>
         </dependency>
+        <dependency>
+            <groupId>io.micrometer</groupId>
+            <artifactId>micrometer-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.micrometer</groupId>
+            <artifactId>micrometer-registry-prometheus</artifactId>
+        </dependency>
 
         <!--test-->
         <dependency>
@@ -196,7 +193,7 @@
         <dependency>
             <groupId>com.rbkmoney</groupId>
             <artifactId>easyway</artifactId>
-            <version>0.2.0</version>
+            <version>0.8.0</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -204,6 +201,12 @@
             <artifactId>awaitility</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>io.github.benas</groupId>
+            <artifactId>random-beans</artifactId>
+            <version>3.9.0</version>
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -276,7 +279,7 @@
             <plugin>
                 <groupId>com.github.gantsign.maven</groupId>
                 <artifactId>ktlint-maven-plugin</artifactId>
-                <version>1.9.0</version>
+                <version>1.11.2</version>
                 <executions>
                     <execution>
                         <phase>validate</phase>
@@ -299,7 +302,7 @@
                 </dependencies>
                 <configuration>
                     <resourceBundles>
-                        <resourceBundle>com.rbkmoney:shared-resources:${shared-resources.version}</resourceBundle>
+                        <resourceBundle>dev.vality:shared-resources:${shared-resources.version}</resourceBundle>
                     </resourceBundles>
                     <attachToMain>false</attachToMain>
                     <attachToTest>false</attachToTest>
@@ -315,7 +318,7 @@
             <plugin>
                 <groupId>com.rbkmoney.maven.plugins</groupId>
                 <artifactId>pg-embedded-plugin</artifactId>
-                <version>1.7</version>
+                <version>1.8</version>
                 <configuration>
                     <port>${db.port}</port>
                     <dbName>${db.name}</dbName>
@@ -392,7 +395,7 @@
                             <inputSchema>${db.schema}</inputSchema>
                         </database>
                         <target>
-                            <packageName>com.rbkmoney.vortigon.domain.db</packageName>
+                            <packageName>dev.vality.vortigon.domain.db</packageName>
                             <directory>target/generated-sources/jooq</directory>
                         </target>
                     </generator>
