@@ -7,4 +7,4 @@ on:
 
 jobs:
   build:
-    uses: valitydev/base-workflow/.github/workflows/maven-service-build.yml@ebf0eb3b6ed76aa466f644118de031fe23a131c8
+    uses: valitydev/base-workflow/.github/workflows/maven-service-build.yml@v2-beta
