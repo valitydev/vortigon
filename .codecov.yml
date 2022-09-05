@@ -3,4 +3,8 @@ coverage:
     project:
       default:
         target: auto
-        threshold: 10%
+        threshold: 5%
+    patch:
+      default:
+        enabled: no
+        if_not_found: success
