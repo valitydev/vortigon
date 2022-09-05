@@ -4,9 +4,9 @@ import dev.vality.damsel.payment_processing.PartyChange
 import dev.vality.damsel.payment_processing.PartyEventData
 import dev.vality.machinegun.eventsink.MachineEvent
 import dev.vality.sink.common.parser.impl.MachineEventParser
-import dev.vality.vortigon.config.properties.KafkaProperties
 import dev.vality.vortigon.handler.ChangeHandler
 import mu.KotlinLogging
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.kafka.support.Acknowledgment
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
@@ -17,7 +17,8 @@ private val log = KotlinLogging.logger {}
 class PartyEventHandleManager(
     private val eventParser: MachineEventParser<PartyEventData>,
     private val partyHandlers: List<ChangeHandler<PartyChange, MachineEvent>>,
-    private val kafkaProperties: KafkaProperties,
+    @Value("\${kafka.consumer.throttling-timeout-ms}")
+    private val throttlingTimeoutMs: Int,
 ) {
 
     @Transactional
@@ -31,7 +32,7 @@ class PartyEventHandleManager(
             ack.acknowledge()
         } catch (e: Exception) {
             log.error(e) { "Exception during PartyListener process" }
-            Thread.sleep(kafkaProperties.consumer.throttlingTimeoutMs.toLong())
+            Thread.sleep(throttlingTimeoutMs.toLong())
             throw e
         }
     }
