@@ -3,38 +3,40 @@ package dev.vality.vortigon.config
 import com.rbkmoney.kafka.common.exception.handler.SeekToCurrentWithSleepBatchErrorHandler
 import dev.vality.machinegun.eventsink.MachineEvent
 import dev.vality.mg.event.sink.service.ConsumerGroupIdService
-import dev.vality.vortigon.config.properties.KafkaProperties
 import dev.vality.vortigon.serializer.MachineEventDeserializer
 import lombok.RequiredArgsConstructor
-import mu.KotlinLogging
 import org.apache.kafka.clients.consumer.ConsumerConfig
 import org.apache.kafka.clients.consumer.OffsetResetStrategy
 import org.apache.kafka.common.serialization.Deserializer
 import org.apache.kafka.common.serialization.StringDeserializer
+import org.springframework.beans.factory.annotation.Value
+import org.springframework.boot.autoconfigure.kafka.KafkaProperties
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory
 import org.springframework.kafka.listener.ContainerProperties
-import java.io.File
-
-private val log = KotlinLogging.logger {}
 
 @Configuration
 @RequiredArgsConstructor
 class KafkaConfig(
     private val kafkaProperties: KafkaProperties,
     private val consumerGroupIdService: ConsumerGroupIdService,
+    @Value("\${kafka.consumer.concurrency}")
+    private val concurrencyListenerCount: Int,
+    @Value("\${kafka.max.poll.records}")
+    private val maxPollRecords: String
 ) {
+
     @Bean
     fun partyListenerContainerFactory(): ConcurrentKafkaListenerContainerFactory<String, MachineEvent> {
         val factory = ConcurrentKafkaListenerContainerFactory<String, MachineEvent>()
         val consumerGroup: String = consumerGroupIdService.generateGroupId(PARTY_CONSUMER_GROUP_NAME)
-        initDefaultListenerProperties<MachineEvent>(
+        initDefaultListenerProperties(
             factory,
             consumerGroup,
             MachineEventDeserializer(),
-            kafkaProperties.maxPollRecords
+            maxPollRecords
         )
         return factory
     }
@@ -49,7 +51,7 @@ class KafkaConfig(
             consumerGroup, deserializer, maxPollRecords
         )
         factory.consumerFactory = consumerFactory
-        factory.setConcurrency(kafkaProperties.consumer.concurrency.toInt())
+        factory.setConcurrency(concurrencyListenerCount)
         factory.setBatchErrorHandler(SeekToCurrentWithSleepBatchErrorHandler())
         factory.isBatchListener = true
         factory.containerProperties.ackMode = ContainerProperties.AckMode.MANUAL
@@ -60,7 +62,7 @@ class KafkaConfig(
         deserializer: Deserializer<T>,
         maxPollRecords: String,
     ): DefaultKafkaConsumerFactory<String, T> {
-        val props: MutableMap<String, Any> = createDefaultProperties(consumerGroup)
+        val props: MutableMap<String, Any> = createDefaultConsumerProperties(consumerGroup)
         props[ConsumerConfig.MAX_POLL_RECORDS_CONFIG] = maxPollRecords
         return DefaultKafkaConsumerFactory(
             props,
@@ -69,33 +71,13 @@ class KafkaConfig(
         )
     }
 
-    private fun createDefaultProperties(value: String): MutableMap<String, Any> {
-        return HashMap<String, Any>().apply {
-            put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaProperties.bootstrapServers)
-            put(ConsumerConfig.GROUP_ID_CONFIG, value)
-            put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, OffsetResetStrategy.EARLIEST.name.lowercase())
-            put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, false)
-            put(ConsumerConfig.SESSION_TIMEOUT_MS_CONFIG, kafkaProperties.maxSessionTimeoutMs)
-            put(ConsumerConfig.MAX_POLL_INTERVAL_MS_CONFIG, kafkaProperties.maxPollIntervalMs)
-            putAll(createSslConfig())
-        }
-    }
+    private fun createDefaultConsumerProperties(value: String): MutableMap<String, Any> {
+        val properties = kafkaProperties.buildConsumerProperties()
+        properties[ConsumerConfig.GROUP_ID_CONFIG] = value
+        properties[ConsumerConfig.AUTO_OFFSET_RESET_CONFIG] = OffsetResetStrategy.EARLIEST.name.lowercase()
+        properties[ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG] = false
 
-    private fun createSslConfig(): Map<String, Any> {
-        val kafkaSslProperties = kafkaProperties.ssl
-        log.info("Kafka ssl isEnabled: {}", kafkaSslProperties.enabled)
-        val configProps = HashMap<String, Any>()
-        if (kafkaSslProperties.enabled) {
-            configProps["security.protocol"] = "SSL"
-            configProps["ssl.truststore.location"] = File(kafkaSslProperties.trustStoreLocation).absolutePath
-            configProps["ssl.truststore.password"] = kafkaSslProperties.trustStorePassword
-            configProps["ssl.keystore.type"] = "PKCS12"
-            configProps["ssl.truststore.type"] = "PKCS12"
-            configProps["ssl.keystore.location"] = File(kafkaSslProperties.keyStoreLocation).absolutePath
-            configProps["ssl.keystore.password"] = kafkaSslProperties.keyStorePassword
-            configProps["ssl.key.password"] = kafkaSslProperties.keyPassword
-        }
-        return configProps
+        return properties
     }
 
     companion object {

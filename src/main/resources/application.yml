@@ -44,26 +44,19 @@ spring:
       schemas: ps
       url: '@db.url@'
       table: flyway_schema_history
+  kafka:
+    bootstrap-servers: localhost:9092
+    consumer:
+      properties:
+        session.timeout.ms: 60000
+        max.poll.interval.ms: 60000
 
 info:
   version: '@project.version@'
   stage: dev
 
 kafka:
-  bootstrap-servers: kenny-kafka1.bst1.rbkmoney.net:9092
-  retry-attempts: 3
-  max-poll-records: 100
-  max-poll-interval-ms: 60000
-  max-session-timeout-ms: 6000
-  ssl:
-    enabled: false
-    trust-store-location: "test"
-    trust-store-password: "test"
-    key-store-location: "test"
-    key-store-password: "test"
-    key-password: "test"
-    key-store-type: PKCS12
-    trust-store-type: PKCS12
+  max.poll.records: 100
   consumer:
     enabled: true
     prefix: vortigon
@@ -72,7 +65,6 @@ kafka:
   topic:
     party:
       initial: mg-events-party
-      max-poll-records: 50
 
 repository:
   url: http://dominant:8022/v1/domain/repository_client
