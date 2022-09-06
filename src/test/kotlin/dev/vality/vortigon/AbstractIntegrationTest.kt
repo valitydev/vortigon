@@ -22,16 +22,15 @@ import org.springframework.context.ApplicationContextInitializer
 import org.springframework.context.ConfigurableApplicationContext
 import org.springframework.test.annotation.DirtiesContext
 import org.springframework.test.context.ContextConfiguration
-import org.testcontainers.containers.KafkaContainer
 import java.time.Duration
 import java.time.Instant
-import java.util.Properties
+import java.util.*
 
 private val log = KotlinLogging.logger {}
 
 @DirtiesContext
-@ContextConfiguration(initializers = [AbstractKafkaIntegrationTest.Initializer::class])
-abstract class AbstractKafkaIntegrationTest : PostgresAbstractTest() {
+@ContextConfiguration(initializers = [AbstractIntegrationTest.Initializer::class])
+abstract class AbstractIntegrationTest : ContainerConfiguration() {
 
     protected fun createMachineEvent(partyChange: PartyChange, sourceId: String, sequenceId: Long): MachineEvent {
         val message = MachineEvent()
@@ -101,12 +100,5 @@ abstract class AbstractKafkaIntegrationTest : PostgresAbstractTest() {
             props[ConsumerConfig.AUTO_OFFSET_RESET_CONFIG] = "earliest"
             return KafkaConsumer<String, T>(props)
         }
-    }
-
-    companion object {
-        private val kafka: KafkaContainer by lazy {
-            KafkaContainer(KAFKA_DOCKER_VERSION).withEmbeddedZookeeper()
-        }
-        private const val KAFKA_DOCKER_VERSION = "5.0.1"
     }
 }

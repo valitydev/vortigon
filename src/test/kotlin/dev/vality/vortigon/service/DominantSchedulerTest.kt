@@ -1,17 +1,8 @@
 package dev.vality.vortigon.service
 
-import dev.vality.damsel.domain.Category
-import dev.vality.damsel.domain.CategoryObject
-import dev.vality.damsel.domain.CategoryRef
-import dev.vality.damsel.domain.CategoryType
-import dev.vality.damsel.domain.DomainObject
-import dev.vality.damsel.domain_config.Commit
-import dev.vality.damsel.domain_config.InsertOp
-import dev.vality.damsel.domain_config.Operation
-import dev.vality.damsel.domain_config.RemoveOp
-import dev.vality.damsel.domain_config.RepositorySrv
-import dev.vality.damsel.domain_config.UpdateOp
-import dev.vality.vortigon.PostgresAbstractTest
+import dev.vality.damsel.domain.*
+import dev.vality.damsel.domain_config.*
+import dev.vality.vortigon.ContainerConfiguration
 import dev.vality.vortigon.VortigonApplication
 import dev.vality.vortigon.repository.CategoryDao
 import org.junit.jupiter.api.Assertions.assertEquals
@@ -28,7 +19,7 @@ import org.springframework.jdbc.core.JdbcTemplate
 import java.util.List
 
 @SpringBootTest(classes = [VortigonApplication::class])
-class DominantSchedulerTest : PostgresAbstractTest() {
+class DominantSchedulerTest : ContainerConfiguration() {
 
     @Autowired
     lateinit var dominantService: DominantService

@@ -4,10 +4,8 @@ import dev.vality.damsel.domain.Category
 import dev.vality.damsel.domain.CategoryType
 import dev.vality.geck.common.util.TypeUtil
 import dev.vality.machinegun.eventsink.SinkEvent
-import dev.vality.vortigon.AbstractKafkaIntegrationTest
+import dev.vality.vortigon.AbstractIntegrationTest
 import dev.vality.vortigon.VortigonApplication
-import dev.vality.vortigon.domain.db.enums.ContractStatus
-import dev.vality.vortigon.domain.db.enums.Suspension
 import dev.vality.vortigon.repository.ContractDao
 import dev.vality.vortigon.repository.ContractorDao
 import dev.vality.vortigon.repository.PartyDao
@@ -36,7 +34,7 @@ import java.util.concurrent.TimeUnit
 import java.util.concurrent.atomic.AtomicLong
 
 @SpringBootTest(classes = [VortigonApplication::class])
-class PartyManagementListenerTest : AbstractKafkaIntegrationTest() {
+class PartyManagementListenerTest : AbstractIntegrationTest() {
 
     @Autowired
     lateinit var partyShopDao: ShopDao

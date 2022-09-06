@@ -1,17 +1,9 @@
 package dev.vality.vortigon.resource.handler
 
-import dev.vality.damsel.vortigon.ContractFilter
-import dev.vality.damsel.vortigon.PartyFilter
-import dev.vality.damsel.vortigon.PartyFilterRequest
-import dev.vality.damsel.vortigon.PaymentInstitutionRealm
-import dev.vality.damsel.vortigon.ShopFilter
+import dev.vality.damsel.vortigon.*
 import dev.vality.geck.common.util.TypeUtil
-import dev.vality.vortigon.PostgresAbstractTest
+import dev.vality.vortigon.ContainerConfiguration
 import dev.vality.vortigon.VortigonApplication
-import dev.vality.vortigon.domain.db.tables.pojos.Category
-import dev.vality.vortigon.domain.db.tables.pojos.Contract
-import dev.vality.vortigon.domain.db.tables.pojos.Party
-import dev.vality.vortigon.domain.db.tables.pojos.Shop
 import dev.vality.vortigon.repository.CategoryDao
 import dev.vality.vortigon.repository.ContractDao
 import dev.vality.vortigon.repository.PartyDao
@@ -26,7 +18,7 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.jdbc.core.JdbcTemplate
 
 @SpringBootTest(classes = [VortigonApplication::class])
-class VortigonServiceHandlerTest : PostgresAbstractTest() {
+class VortigonServiceHandlerTest : ContainerConfiguration() {
 
     @Autowired
     lateinit var vortigonServiceHandler: VortigonServiceHandler
