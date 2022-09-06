@@ -1,6 +1,5 @@
 package dev.vality.vortigon.config
 
-import com.rbkmoney.kafka.common.exception.handler.SeekToCurrentWithSleepBatchErrorHandler
 import dev.vality.machinegun.eventsink.MachineEvent
 import dev.vality.mg.event.sink.service.ConsumerGroupIdService
 import dev.vality.vortigon.serializer.MachineEventDeserializer
@@ -16,6 +15,8 @@ import org.springframework.context.annotation.Configuration
 import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory
 import org.springframework.kafka.listener.ContainerProperties
+import org.springframework.kafka.listener.DefaultErrorHandler
+import org.springframework.util.backoff.ExponentialBackOff
 
 @Configuration
 @RequiredArgsConstructor
@@ -25,7 +26,11 @@ class KafkaConfig(
     @Value("\${kafka.consumer.concurrency}")
     private val concurrencyListenerCount: Int,
     @Value("\${kafka.max.poll.records}")
-    private val maxPollRecords: String
+    private val maxPollRecords: String,
+    @Value("\${kafka.error-handler.backoff.initial-interval}")
+    private val initialInterval: Long,
+    @Value("\${kafka.error-handler.backoff.max-interval}")
+    private val maxInterval: Long
 ) {
 
     @Bean
@@ -52,7 +57,11 @@ class KafkaConfig(
         )
         factory.consumerFactory = consumerFactory
         factory.setConcurrency(concurrencyListenerCount)
-        factory.setBatchErrorHandler(SeekToCurrentWithSleepBatchErrorHandler())
+        val exponentialBackOff = ExponentialBackOff().apply {
+            maxInterval = this@KafkaConfig.maxInterval
+            initialInterval = this@KafkaConfig.initialInterval
+        }
+        factory.setCommonErrorHandler(DefaultErrorHandler(exponentialBackOff))
         factory.isBatchListener = true
         factory.containerProperties.ackMode = ContainerProperties.AckMode.MANUAL
     }

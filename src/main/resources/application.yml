@@ -65,6 +65,10 @@ kafka:
   topic:
     party:
       initial: mg-events-party
+  error-handler:
+    backoff:
+      initial-interval: 1000
+      max-interval: 600000
 
 repository:
   url: http://dominant:8022/v1/domain/repository_client
