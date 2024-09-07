@@ -38,7 +38,7 @@
         <db-common-lib.version>0.0.1</db-common-lib.version>
         <vortigon-proto.version>1.16-d6ebfa4</vortigon-proto.version>
         <testcontainers.version>1.16.3</testcontainers.version>
-        <schedlock.version>4.25.0</schedlock.version>
+        <schedlock.version>5.16.0</schedlock.version>
     </properties>
 
     <dependencies>
