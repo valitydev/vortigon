@@ -6,7 +6,7 @@
     <parent>
         <groupId>dev.vality</groupId>
         <artifactId>service-parent-pom</artifactId>
-        <version>2.0.0-BETA-11</version>
+        <version>2.2.0</version>
     </parent>
 
     <artifactId>vortigon</artifactId>
@@ -18,7 +18,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <kotlin.version>1.6.10</kotlin.version>
+        <kotlin.version>1.9.25</kotlin.version>
         <server.port>8022</server.port>
         <management.port>8023</management.port>
         <exposed.ports>${server.port} ${management.port}</exposed.ports>
@@ -30,15 +30,15 @@
         <db.password>postgres</db.password>
         <db.schema>vrt</db.schema>
         <sink-common-lib.version>0.0.1</sink-common-lib.version>
-        <kafka-common-lib.version>0.0.1</kafka-common-lib.version>
+        <kafka-common-lib.version>0.0.3</kafka-common-lib.version>
         <serializer.version>0.6.11</serializer.version>
         <eventstock-client-damsel>1.2.10</eventstock-client-damsel>
         <mg-event-sink-listener-spring-boot-starter.version>0.0.1
         </mg-event-sink-listener-spring-boot-starter.version>
         <db-common-lib.version>0.0.1</db-common-lib.version>
-        <vortigon-proto.version>1.16-d6ebfa4</vortigon-proto.version>
-        <testcontainers.version>1.16.3</testcontainers.version>
-        <schedlock.version>4.25.0</schedlock.version>
+        <vortigon-proto.version>1.20-1ed031a</vortigon-proto.version>
+        <testcontainers.version>1.20.3</testcontainers.version>
+        <schedlock.version>4.48.0</schedlock.version>
     </properties>
 
     <dependencies>
@@ -81,7 +81,7 @@
         <dependency>
             <groupId>dev.vality</groupId>
             <artifactId>damsel</artifactId>
-            <version>1.597-bfedcb9</version>
+            <version>1.648-ad715bd</version>
         </dependency>
         <dependency>
             <groupId>dev.vality.geck</groupId>
@@ -282,7 +282,7 @@
             <plugin>
                 <groupId>com.github.gantsign.maven</groupId>
                 <artifactId>ktlint-maven-plugin</artifactId>
-                <version>1.12.1</version>
+                <version>1.16.0</version>
                 <executions>
                     <execution>
                         <phase>validate</phase>
@@ -295,7 +295,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-remote-resources-plugin</artifactId>
-                <version>1.6.0</version>
+                <version>1.7.0</version>
                 <dependencies>
                     <dependency>
                         <groupId>org.apache.maven.shared</groupId>
